@@ -1,0 +1,49 @@
+* {
+    -fx-primary-color: #081f2d;
+    -fx-secondary-color: #00C6B2;
+    -fx-grey-color: #ADC3D6;
+    -fx-darkest-grey-color: #323232;
+    -fx-light-grey-color: #F1F1E6;
+    -fx-orange-color: #E89B26;
+}
+
+#SeparatorControls {
+
+}
+.button {
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-radius: 19px;
+    -fx-border-radius: 19px;
+    -fx-border: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: -fx-primary-color;
+    -fx-font-size: 15px;
+
+    -fx-cursor: pointer;
+    -fx-transition: 0.3s;
+}
+
+.button:hover {
+    -fx-background-color: -fx-grey-color;
+    -fx-background-radius: 19px;
+    -fx-border-radius: 19px;
+    -fx-border-color: -fx-primary-color;
+    -fx-transition: 0.3s;
+}
+
+#l1 {
+     -fx-font-family: "Montserrat";
+     -fx-font-weight: bold;
+ }
+#l2 {
+    -fx-font-family: "Montserrat";
+    -fx-font-weight: bold;
+}
+
+#myToggleButton {
+    -fx-background-image: url("/com/example/demo3/gui/iconsxample/demo3/gui/icons/visible.png");
+}
+
+#myToggleButton:selected {
+    -fx-background-image: url("/com/example/demo3/gui/iconsxample/demo3/gui/icons/aveugle.png");
+}

@@ -1,0 +1,113 @@
+* {
+    -fx-primary-color: #081f2d;
+    -fx-secondary-color: #00C6B2;
+    -fx-grey-color: #ADC3D6;
+    -fx-darkest-grey-color: #323232;
+    -fx-light-grey-color: #F1F1E6;
+    -fx-orange-color: #E89B26;
+}
+
+.root{
+    -fx-background-color: -fx-light-grey-color;
+}
+.button {
+    -fx-background-color: -fx-primary-color;
+    -fx-background-radius: 29px;
+    -fx-border-radius: 29px;
+    -fx-border: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: -fx-primary-color;
+    -fx-text-fill: -fx-light-grey-color;
+    -fx-font-size: 15px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: pointer;
+    -fx-transition: 0.3s;
+}
+
+.button:hover {
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-radius: 29px;
+    -fx-border-radius: 29px;
+    -fx-text-fill: -fx-primary-color;
+    -fx-border-color: -fx-primary-color;
+    -fx-transition: 0.3s;
+}
+#titre{
+    -fx-font-size: 50px;
+    -fx-font-family: "Montserrat-Alt1 ExtBd";
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary-color;
+}
+#soustitre{
+    -fx-font-size: 17px;
+    -fx-font-family: "Montserrat";
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-text-fill: black;
+}
+
+.text-field {
+    -fx-accent: -fx-primary-color;
+    -fx-background-color: #ADC3D6, #F1F1E6;
+    -fx-background-insets: 0, 0 0 3 0;
+    -fx-background-radius: 0;
+    -fx-prompt-text-fill: #ADC3D6;
+    -fx-font-size: 15px;
+    -fx-text-fill: black;
+    -fx-padding: 0.5em 0.5em 0.5em 0.5em; /* 5px */
+}
+.text-field:focused {
+    -fx-background-color: #00C6B2, #F1F1E6;
+}
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: -fx-darkest-grey-color;
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-padding: 3px;
+    -fx-font-size: 20px;
+}
+.radio-button .radio:selected {
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-image: null;
+}
+.radio-button -radio:armed {
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-image: null;
+}
+.radio-button -radio:determinate {
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-image: null;
+}
+.radio-button -radio:indeterminate {
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-image: null;
+}
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 8px;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: -fx-grey-color;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: -fx-accent;
+}
+.choice-box .menu-item > .label {
+    -fx-text-fill: black;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: -fx-light-grey-color;
+}
+.choice-box {
+       -fx-background-color: -fx-grey-color;
+       -fx-mark-color: -fx-accent;
+   }
+.choice-box > .label {
+    -fx-text-fill: black;
+}
