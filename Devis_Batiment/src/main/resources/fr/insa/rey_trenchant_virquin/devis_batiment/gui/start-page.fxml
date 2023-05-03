@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="550" prefWidth="800" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.insa.rey_trenchant_virquin.devis_batiment.gui.StartPageController">
+<children>
+    <VBox alignment="CENTER" prefHeight="240.0" prefWidth="900.0" spacing="5.0" VBox.vgrow="NEVER">
+        <children>
+            <Label fx:id="titre" text="ESTIMAPRO">
+            </Label>
+            <Label fx:id="soustitre" text="Sélectionnez ce que vous souhaitez faire:">
+                <VBox.margin>
+                    <Insets top="20.0" />
+                </VBox.margin></Label>
+            <ChoiceBox fx:id="myChoiceBox" minHeight="-1.0" minWidth="-1.0" prefHeight="35.0" prefWidth="200.0">
+                <VBox.margin>
+                    <Insets top="10.0" />
+                </VBox.margin></ChoiceBox>
+        </children>
+    </VBox>
+    <HBox fx:id="HBoxOpen" alignment="CENTER" prefHeight="106.0" prefWidth="800.0" spacing="5.0" VBox.vgrow="NEVER">
+        <children>
+            <TextField fx:id="FilePath" prefHeight="25.0" prefWidth="350.0" />
+            <Button fx:id="ButtonSelectFile" mnemonicParsing="false" text="Sélectionnez un fichier" />
+        </children>
+    </HBox>
+    <VBox fx:id="VBoxCreate" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER">
+        <children>
+            <HBox alignment="CENTER" prefHeight="71.0" prefWidth="800.0" spacing="5.0" VBox.vgrow="NEVER">
+                <children>
+                    <Label text="Veuillez sélectionner le type de Bâtiment:">
+                        <font>
+                            <Font name="Montserrat Medium" size="12.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets right="20.0" />
+                        </HBox.margin></Label>
+                    <RadioButton fx:id="ButtonImmeuble" mnemonicParsing="false" text="Immeuble">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                        <toggleGroup>
+                            <ToggleGroup fx:id="type" />
+                        </toggleGroup></RadioButton>
+                    <RadioButton fx:id="ButtonMaison" mnemonicParsing="false" text="Maison" toggleGroup="$type">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin></RadioButton>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="88.0" prefWidth="917.0" spacing="5.0" VBox.vgrow="NEVER">
+                <children>
+                    <Label text="Veuillez renseigner un nom à votre bâtiment:">
+                        <font>
+                            <Font name="Montserrat Medium" size="12.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets right="20.0" />
+                        </HBox.margin></Label>
+                    <TextField fx:id="nomBatiment" alignment="CENTER" prefHeight="25.0" prefWidth="243.0" promptText="nom du Bâtiment" />
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="5.0" VBox.vgrow="NEVER">
+                <children>
+                    <VBox alignment="CENTER" prefHeight="123.0" prefWidth="180.0" spacing="5.0" VBox.vgrow="NEVER">
+                        <children>
+                            <TextField fx:id="nomClient" alignment="CENTER" promptText="Nom" />
+                            <TextField fx:id="prenomClient" alignment="CENTER" promptText="Prénom" />
+                        </children>
+                    </VBox>
+                    <Separator orientation="VERTICAL" prefHeight="99.0" prefWidth="42.0" HBox.hgrow="ALWAYS" />
+                    <VBox alignment="CENTER_RIGHT" prefHeight="123.0" prefWidth="180.0" spacing="5.0" VBox.vgrow="NEVER">
+                        <children>
+                            <TextField fx:id="adresse" alignment="CENTER" promptText="Adresse" />
+                            <TextField fx:id="postal" alignment="CENTER" promptText="Code postal" />
+                            <TextField fx:id="ville" alignment="CENTER" promptText="Ville" />
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+        </children>
+    </VBox>
+    <HBox fx:id="HBoxFinish" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="800.0" spacing="5.0" VBox.vgrow="NEVER">
+        <children>
+            <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="ButtonFinish" mnemonicParsing="false" text="créer" />
+        </children>
+        <padding>
+            <Insets bottom="20.0" left="3.0" right="30.0" top="3.0" />
+        </padding>
+    </HBox>
+</children>
+</VBox>
+
+

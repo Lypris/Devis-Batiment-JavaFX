@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="mainVBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.insa.rey_trenchant_virquin.devis_batiment.gui.MainPageController">
+  <children>
+     <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Fichier">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Nouveau" />
+            <MenuItem mnemonicParsing="false" text="Ouvrir…" />
+            <Menu mnemonicParsing="false" text="Ouvrir fichier récent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Fermer" />
+            <MenuItem mnemonicParsing="false" text="Enregistrer" />
+            <MenuItem fx:id="SaveAs" mnemonicParsing="false" text="Enregistrer sous" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quitter" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Édition">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Annuler" />
+            <MenuItem mnemonicParsing="false" text="Rétablir" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Supprimer" />
+            <MenuItem mnemonicParsing="false" text="Tout sélectionner" />
+            <MenuItem mnemonicParsing="false" text="Tout désélectionner" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Aide">
+          <items>
+            <MenuItem mnemonicParsing="false" text="À propos" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+     <HBox fx:id="HBoxButtons" alignment="CENTER_LEFT" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER">
+         <children>
+            <Label fx:id="l1" text="Création" />
+            <Button mnemonicParsing="false">
+             <tooltip>
+                 <Tooltip text="Coin: permet de créer des coins sur le niveau sélectionné." />
+             </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/coin.png" />
+                     </image></ImageView>
+               </graphic>
+         </Button>
+             <Button mnemonicParsing="false">
+                 <tooltip>
+                     <Tooltip text="Mur: permet de créer des murs entre des coins existants sur le niveau sélectionné." />
+                 </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/ligne.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+             </Button>
+             <Button mnemonicParsing="false">
+                 <tooltip>
+                     <Tooltip text="Pièce: permet de définir un pièce." />
+                 </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/piece.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+             </Button>
+             <Button mnemonicParsing="false">
+                 <tooltip>
+                     <Tooltip text="Porte: permet d'ajouter une porte dans un mur." />
+                 </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/porte.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+             </Button>
+             <Button mnemonicParsing="false">
+                 <tooltip>
+                     <Tooltip text="Fenêtre: permet de d'ajouter une fenêtre dans un mur." />
+                 </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/fenetre.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+             </Button>
+             <Button mnemonicParsing="false">
+                 <tooltip>
+                     <Tooltip text="Trémie: permet d'ajouter une trémie dans un sol ou un plafond." />
+                 </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/escalier.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+             </Button>
+             <Button mnemonicParsing="false">
+                 <tooltip>
+                     <Tooltip text="Toit: permet d'ajouter une toiture au bâtiment." />
+                 </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/toiture.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+             </Button>
+             <Button mnemonicParsing="false">
+                 <tooltip>
+                     <Tooltip text="Catalogue de revêtements: permet de rechercher un revêtement souhaité parmi un catalogue défini et de l'ajouter à une surface choisie sur le niveau actuel." />
+                 </tooltip>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/revetement.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+             </Button>
+            <Separator fx:id="SeparatorControls" orientation="VERTICAL" />
+            <Label fx:id="l2" text="Contrôles" />
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/curseur.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Curseur de souris" />
+               </tooltip></Button>
+            <Button mnemonicParsing="false" text="Supprimer" />
+            <ToggleButton fx:id="TransparenceButton" mnemonicParsing="false" text="Transparence">
+                <graphic>
+                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@icons/aveugle.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+             </ToggleButton>
+         </children>
+      </HBox>
+     <SplitPane fx:id="splitPane" dividerPositions="0.3" VBox.vgrow="ALWAYS">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="551.0" prefWidth="344.0">
+               <children>
+                  <TreeView fx:id="TreeView" layoutX="-1.0" layoutY="-1.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="551.0" prefWidth="265.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+              <fx:include source="tab-navigation.fxml" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </AnchorPane>
+        </items>
+      </SplitPane>
+     <HBox fx:id="HBoxEnd" alignment="CENTER" spacing="5.0" VBox.vgrow="NEVER">
+      <children>
+        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+          <font>
+            <Font size="11.0" fx:id="x3" />
+          </font>
+          <textFill>
+            <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+          </textFill>
+        </Label>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+        <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+      </children>
+    </HBox>
+  </children>
+</VBox>
