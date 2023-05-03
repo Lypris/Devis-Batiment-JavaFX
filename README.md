@@ -18,12 +18,13 @@ Pour sauvegarder les modifications sur le GitHub : Team/commit puis Team/Remote/
 ## Choses à ajouter
 
 - [ ] Créer une fenêtre de création de niveau : choix de la hauteur sous plafond, bouton annuler, bouton ok.
-- [ ]	Double clique sur un niveau : fenêtre pour modifier la hauteur sous plafond
-- [ ]	Ajouter un canvas à chaque tab (niveau) + grille de dessin
-- [ ]	Méthode pour dessiner un point
-- [ ]	Méthode pour placer le point sur des valeurs « intelligentes »
--	...
-- [ ]	Garde-fou sur la création de pièces en dehors de la surface du niveau inférieur
+- [ ] Double clique sur un niveau : fenêtre pour modifier la hauteur sous plafond
+- [ ] Ajouter un canvas à chaque tab (niveau) + grille de dessin
+- [ ] Méthode pour dessiner un point
+- [ ] Méthode pour placer le point sur des valeurs « intelligentes »
+- [ ] Méthode pour dessiner un mur
+- [ ] 
+- [ ] Garde-fou sur la création de pièces en dehors de la surface du niveau inférieur
 
 - [x] Afficher les liste des objets appartenant à un niveau
 - [x] Implémenter une compatibilité pour les revêtements : filtre en fonction de la surface sur laquelle on souhaite appliquer?
