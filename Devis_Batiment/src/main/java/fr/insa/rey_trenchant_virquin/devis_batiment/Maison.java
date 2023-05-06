@@ -17,9 +17,11 @@ public class Maison extends Batiment {
     }
 
     //méthode creerBatiment de la classe mère héritée
-    public static void creerMaison(String nom_maison, String nom_personne, String prenom_personne, String adresse, String code_postale, String ville) {
+    public static Maison creerMaison(String nom_maison, String nom_personne, String prenom_personne, String adresse, String code_postale, String ville) {
         //pour générer le devis, on demande les coordonnées de la personne puis on ajoute ces informations à l'objet instancié précédemment
         id_maison++;
         Maison maison = new Maison(id_maison, nom_maison, null, null);
+        System.out.println(maison); //à supprimer
+        return maison;
     }
 }

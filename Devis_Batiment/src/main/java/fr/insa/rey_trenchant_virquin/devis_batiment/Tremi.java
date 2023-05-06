@@ -3,6 +3,7 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 import javafx.scene.canvas.GraphicsContext;
 
 /**

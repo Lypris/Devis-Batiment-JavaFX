@@ -1,5 +1,7 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment;
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

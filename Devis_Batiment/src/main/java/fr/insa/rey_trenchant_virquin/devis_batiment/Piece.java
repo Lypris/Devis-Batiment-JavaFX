@@ -4,6 +4,8 @@
  */
 package fr.insa.rey_trenchant_virquin.devis_batiment;
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,7 +50,7 @@ public class Piece {
 
     @Override
     public String toString() {
-        return "fr.insa.rey_trenchant_virquin.devis_batiment.Piece{" + "id=" + id + ", I=" + Mur[0].getId() + ", II=" + Mur[1].getId() + ", III=" + Mur[2].getId() + ", IV=" + Mur[3].getId() + ", c1=" + Coin[0].getId() + ", c2=" + Coin[1].getId() + ", c3=" + Coin[2].getId() + ", c4=" + Coin[3].getId() + ", Surface du sol à couvrir : " + surface() + "m²" + '}';
+        return "Piece{" + "id=" + id + ", I=" + Mur[0].getId() + ", II=" + Mur[1].getId() + ", III=" + Mur[2].getId() + ", IV=" + Mur[3].getId() + ", c1=" + Coin[0].getId() + ", c2=" + Coin[1].getId() + ", c3=" + Coin[2].getId() + ", c4=" + Coin[3].getId() + ", Surface du sol à couvrir : " + surface() + "m²" + '}';
     }
 
     public int getId() {
@@ -86,14 +88,14 @@ public class Piece {
             }
             Coin[] coin = SetCoin.toArray(new Coin[4]); //conversion du set en tableau
             idpiece++;
-            Piece p = new Piece (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece);
-            Sol sol = new Sol (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece, null, null);
-            Plafond plafond = new Plafond (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece, null, null);
+            Piece p = new Piece (mur, coin, Gestion.ListNiveau.get(HelloApplication.niv_actu), idpiece);
+            Sol sol = new Sol (mur, coin, Gestion.ListNiveau.get(HelloApplication.niv_actu), idpiece, null, null);
+            Plafond plafond = new Plafond (mur, coin, Gestion.ListNiveau.get(HelloApplication.niv_actu), idpiece, null, null);
             Gestion.ListPiece.add(p);
             Gestion.ListSol.add(sol);
             Gestion.ListPlafond.add(plafond);
             //ajout de la piece dans la liste des pièces du niveau.
-            Gestion.ListNiveau.get(Gestion.niv_actu).addPiece(p);
+            Gestion.ListNiveau.get(HelloApplication.niv_actu).addPiece(p);
             System.out.println(p);
             System.out.println("Quel nom souhaitez vous donner à votre pièce ?");
             p.setNom(Lire.S());

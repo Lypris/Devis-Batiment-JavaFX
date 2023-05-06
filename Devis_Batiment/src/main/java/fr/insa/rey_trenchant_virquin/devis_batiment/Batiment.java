@@ -39,6 +39,10 @@ public abstract class Batiment {
         return nom;
     }
 
+    public static List<Niveau> getListNiveau() {
+        return ListNiveau;
+    }
+
     @Override
     public String toString() {
         String result = "Type de bâtiment : " + this.getClass().getSimpleName() + "\n";

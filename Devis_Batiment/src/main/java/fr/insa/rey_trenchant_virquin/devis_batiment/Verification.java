@@ -3,6 +3,8 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +20,7 @@ public class Verification {
         // les coins existe
         if(!Gestion.ListCoin.contains(debut) || !Gestion.ListCoin.contains(fin)) return false;
         // les coins appartiennent au meme niveau
-        if(debut.getNiv() != Objfromid.NiveauFromId(Gestion.niv_actu) || fin.getNiv() != Objfromid.NiveauFromId(Gestion.niv_actu)) return false;
+        if(debut.getNiv() != Objfromid.NiveauFromId(HelloApplication.niv_actu) || fin.getNiv() != Objfromid.NiveauFromId(HelloApplication.niv_actu)) return false;
         // les coins sont différents
         if(debut == fin) return false;
         // les coins sont alignés
@@ -142,12 +144,15 @@ public class Verification {
         Piece p = Objfromid.PieceFromId(id);
         // la piece existe
         if(!Gestion.ListPiece.contains(p)) return false;
-        // n'appartiens pas déjà un autre appart
-        for(Appartement a : Gestion.ListAppartement){
-            for(Piece p1 : a.getListpiece()){
-                if(p1==p){
-                    return false;
-                } 
+        // n'appartiens pas déjà un autre appart si le bâtiment créer est un immeuble
+        if(HelloApplication.bâtiment instanceof Immeuble){
+            Immeuble immeuble = (Immeuble) HelloApplication.bâtiment;
+            for(Appartement a : immeuble.ListAppartements){
+                for(Piece p1 : a.getListpiece()){
+                    if(p1==p){
+                        return false;
+                    }
+                }
             }
         }
         return true;

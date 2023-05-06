@@ -1,15 +1,18 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.Batiment;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
+
 public class HelloApplication extends Application {
+    public static Batiment bâtiment;
+    public static int niv_actu=1; //id du niveau sur lequel on travaille
     @Override
     public void start(Stage stage) {
         try {
@@ -34,4 +37,6 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+
 }

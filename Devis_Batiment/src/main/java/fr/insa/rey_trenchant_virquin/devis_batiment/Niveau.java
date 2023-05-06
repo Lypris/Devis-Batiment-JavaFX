@@ -1,5 +1,7 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment;
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,16 +55,15 @@ public class Niveau {
     }
 
     public static Niveau creerNiveau(int id_niv) {
-        if(Objfromid.NiveauFromId(id_niv)==null){
+        if (Objfromid.NiveauFromId(id_niv) == null) {
             System.out.println("Quelle est la hauteur sous plafond de ce niveau ?");
             double h = Lire.d();
             List<Piece> Listpiece = new ArrayList<>();
-            Niveau niv = new Niveau (id_niv, Listpiece, h);
+            Niveau niv = new Niveau(id_niv, Listpiece, h);
             Gestion.ListNiveau.add(niv);
             System.out.println(niv);
             return niv;
-        }
-        else{
+        } else {
             System.out.println("Ce niveau existe déjà : vous travaillez maintenant sur le niveau : " + id_niv);
             return Objfromid.NiveauFromId(id_niv);
         }

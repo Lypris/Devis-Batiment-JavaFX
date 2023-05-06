@@ -1,5 +1,9 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.Coin;
+import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
+import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -30,6 +34,9 @@ public class MainPageController implements Initializable {
     private Label l1, l2;
     @FXML
     private MenuItem SaveAs;
+    @FXML
+    protected Button CoinButton;
+    static boolean create_coin = false;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Obtenez la hauteur et la largeur de l'écran de l'utilisateur
@@ -73,6 +80,16 @@ public class MainPageController implements Initializable {
         SaveAs.setOnAction(event -> {
             saveAs();
         });
+        //action lors d'un clic sur le bouton coin : on change le curseur de la souris et on attend un clic de l'utilisateur
+        CoinButton.setOnAction(event -> {
+            Scene scene = CoinButton.getScene();
+            scene.setCursor(javafx.scene.Cursor.CROSSHAIR);
+            if(create_coin == false){
+                create_coin = true;
+            }else{
+                create_coin = false;
+            }
+        });
     }
     public void selectItem(){
 
@@ -90,6 +107,7 @@ public class MainPageController implements Initializable {
         // Afficher la fenêtre de dialogue
         fileChooser.showSaveDialog(null);
     }
+
 
 }
 

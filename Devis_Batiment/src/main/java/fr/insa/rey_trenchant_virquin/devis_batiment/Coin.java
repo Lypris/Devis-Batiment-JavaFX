@@ -3,8 +3,11 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import static fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid.NiveauFromId;
 
 
 /**
@@ -47,14 +50,10 @@ public class Coin {
         return "Coin{" + "x=" + x + ", y=" + y + ", id=" + id + ", niv=" + niv.getId() + '}';
     }
 
-    public static void creerCoin(){
-        System.out.println("Saisissez la valeur en abscisse de votre point:");
-        double x=Lire.d();
-        System.out.println("Saisissez la valeur en ordonnée de votre point:");
-        double y=Lire.d();
+    public static Coin creerCoin(double x, double y){
         boolean doublons = false;
-        
-        for (Coin c : Gestion.ListCoin){ //vérifie si le coin existe déjà dans ce niveau
+        //vérifie si le coin existe déjà dans ce niveau
+        for (Coin c : Gestion.ListCoin){
             if (c.getX()==x && c.getY()==y ){
                 doublons=true;
                 break;
@@ -62,16 +61,18 @@ public class Coin {
         }
         if (doublons==true){
             System.out.println("Ce point existe déjà.");
+            return null;
         }else{
             idcoin++;
-            Coin c = new Coin(x,y,Objfromid.NiveauFromId(Gestion.niv_actu),idcoin);
+            Coin c = new Coin(x,y, NiveauFromId(Gestion.niv_actu),idcoin);
             Gestion.ListCoin.add(c);
             System.out.println(c);
+            return c;
         }
         
     }
 
-    public void dessine(GraphicsContext context){
+    public void dessine(GraphicsContext context) {
         context.setFill(Color.BLACK);
         context.fillOval(this.x-RAYON_DESSIN, this.y-RAYON_DESSIN,2*RAYON_DESSIN, 2*RAYON_DESSIN);
     }

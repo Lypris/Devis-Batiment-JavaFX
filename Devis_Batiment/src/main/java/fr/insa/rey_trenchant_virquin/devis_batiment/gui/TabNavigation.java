@@ -3,12 +3,15 @@ package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Niveau;
+import fr.insa.rey_trenchant_virquin.devis_batiment.Piece;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TabNavigation {
@@ -19,9 +22,12 @@ public class TabNavigation {
 
     public void initialize() throws IOException {
         // Ajoute un onglet par défaut avec un niveau correspondant
-        Niveau defaultNiveau = Niveau.creerNiveau(1);
+        Niveau defaultNiveau = new Niveau(1, 2.5);
+        Gestion.ListNiveau.add(defaultNiveau);
         Tab defaultTab = new Tab("Niveau 1");
-        defaultTab.setContent(new TextArea("Niveau 1"));
+        DessinCanvas defaultCanvas = new DessinCanvas(tabPane.getWidth(), tabPane.getHeight());
+        defaultTab.setContent(defaultCanvas);
+        defaultCanvas.drawGrid();
         defaultTab.setUserData(defaultNiveau);
         tabPane.getTabs().add(0, defaultTab);
         tabPane.getSelectionModel().select(defaultTab);
@@ -37,8 +43,12 @@ public class TabNavigation {
             System.out.println(newNiveau); //à supprimer
             System.out.println(Gestion.ListNiveau); //à supprimer
             Tab newTab = new Tab("Niveau " + newNiveau.getId());
-            //TODO Modifier ligne suivante pour implémenter Canvas; zone de dessin
-            newTab.setContent(new TextArea("Niveau " + newNiveau.getId()));
+            //TODO Modifier ligne suivante pour implémenter DessinCanvas; zone de dessin
+            //on ajoute un DessinCanvas au tabpane qui prend la taille du tabpane même lorsqu'on redimensionne le tabpane
+            DessinCanvas canvas = new DessinCanvas(tabPane.getWidth(), tabPane.getHeight());
+            newTab.setContent(canvas);
+            canvas.drawGrid();
+
             newTab.setUserData(newNiveau);
             tabPane.getTabs().add(tabIndex, newTab);
             tabPane.getSelectionModel().select(newTab);
@@ -78,6 +88,24 @@ public class TabNavigation {
                 }
             }
         });
+        //Ajoute un écouteur sur la sélection d'un onglet: met à jour le niveau actuel niv_actu
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Gestion.niv_actu = tabPane.getSelectionModel().getSelectedIndex();
+            }
+        });
+
+        //Ajouter un écouteur sur le redimensionnement du tabpane: redimensionne les canvas des onglets
+        tabPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            for (Tab tab : tabPane.getTabs()) {
+                Node tabContent = tab.getContent();
+                if (tabContent instanceof DessinCanvas) {
+                    ((DessinCanvas) tabContent).setWidth(newValue.doubleValue());
+                    ((DessinCanvas) tabContent).drawGrid();
+                }
+            }
+        });
+        //TODO: ajouter un écouteur sur le clique droit de la souris sur un tab
         //ajout d'une action lors d'un clique droit de la souris sur un tab: propose dans l'interface de définir une hauteur pour le niveau correspondant
 
     }

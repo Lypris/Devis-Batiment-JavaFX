@@ -98,16 +98,16 @@ public class StartPageController implements Initializable {
 
                 if (ButtonImmeuble.isSelected()){
                     //créer un immeuble
-                    Immeuble.creerImmeuble( nomBatiment.getText(), nomClient.getText(), prenomClient.getText(), adresse.getText(), ville.getText(), postal.getText());
+                    HelloApplication.bâtiment = Immeuble.creerImmeuble( nomBatiment.getText(), nomClient.getText(), prenomClient.getText(), adresse.getText(), ville.getText(), postal.getText());
                     //on ouvre la fenêtre MainPage à l'aide de la méthode openMainPage
-                    try {
+                    try{
                         openMainPage(actionEvent);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else if (ButtonMaison.isSelected()){
                     //créer une maison
-                    Maison.creerMaison( nomBatiment.getText(), nomClient.getText(), prenomClient.getText(), adresse.getText(), ville.getText(), postal.getText());
+                    HelloApplication.bâtiment = Maison.creerMaison( nomBatiment.getText(), nomClient.getText(), prenomClient.getText(), adresse.getText(), ville.getText(), postal.getText());
                     //on ouvre la fenêtre MainPage à l'aide de la méthode openMainPage
                     try {
                         openMainPage(actionEvent);
@@ -247,8 +247,14 @@ public class StartPageController implements Initializable {
         scene.getStylesheets().add(HelloApplication.class.getResource("main-page-style.CSS").toExternalForm());
         stage.setScene(scene);
         stage.setMaximized(true);
-        //on affiche le nom du projet sans son chemin de localisation dans le titre de la fenêtre
-        stage.setTitle("Devis Bâtiment - " + FilePath.getText().substring(FilePath.getText().lastIndexOf("\\")+1));
+        //on affiche le nom du projet sans son chemin de localisation dans le titre de la fenêtre si on ouvre un projet
+        if(ButtonFinish.getText().equals("Ouvrir")){
+            stage.setTitle("Devis Bâtiment - " + FilePath.getText().substring(FilePath.getText().lastIndexOf("\\")+1));
+        }
+        //on affiche le nom du projet dans le titre de la fenêtre si on crée un nouveau projet
+        else{
+            stage.setTitle("Devis Bâtiment - " + nomBatiment.getText());
+        }
         stage.setResizable(true);
         stage.show();
     }

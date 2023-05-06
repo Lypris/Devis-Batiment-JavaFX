@@ -3,6 +3,8 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,10 +15,8 @@ import java.io.IOException;
  */
 public class Enregistrement {
 
-    private Batiment Batiment;
-
     public Enregistrement(Batiment batiment) {
-        this.Batiment = batiment;
+
     }
     
     
@@ -25,14 +25,14 @@ public class Enregistrement {
             BufferedWriter b = new BufferedWriter(new FileWriter(nomFichier+".txt", true));
             b.write("Ceci est un fichier de sauvegarde de la configuration du bâtiment:");
             b.newLine();
-            b.write(Batiment.getNom());
+            b.write(HelloApplication.bâtiment.getNom());
             b.newLine();
             //enregistrement de tous les niveaux
             b.write("Format d'écriture pour un niveau: id;hauteur");
             b.newLine();
             b.write("<Niveaux>");
             b.newLine();
-            for (Niveau n : Batiment.ListNiveau) {
+            for (Niveau n : Gestion.ListNiveau) {
                 b.write(n.getId() + ";" + n.getH());
                 b.newLine();
             }
@@ -43,7 +43,7 @@ public class Enregistrement {
             b.newLine();
             b.write("<Coins>");
             b.newLine();
-            for (Coin c : Batiment.ListCoin) {
+            for (Coin c : Gestion.ListCoin) {
                 b.write(c.getX() + ";" + c.getY() + ";" + c.getId() + ";" + c.getNiv().getId());
                 b.newLine();
             }
@@ -56,7 +56,7 @@ public class Enregistrement {
             b.newLine();
             b.write("<Murs>");
             b.newLine();
-            for (Mur m : Batiment.ListMur) {
+            for (Mur m : Gestion.ListMur) {
                 if (m.getR() != null) { //si le mur a un revêtement, on l'enregistre
                     String nomRevetement = m.getR().getNom();
                      b.write(m.getId() + ";" + m.getDebut().getId() + ";" + m.getFin().getId() + ";" + m.getNiv().getId() + ";" + nomRevetement);
@@ -90,7 +90,7 @@ public class Enregistrement {
             b.newLine();
             b.write("<Pièces>");
             b.newLine();
-            for (Piece p: Batiment.ListPiece) {
+            for (Piece p: Gestion.ListPiece) {
                 b.newLine();
                 b.write(p.getId() + ";" + p.getMur()[0].getId() + ";" + p.getMur()[1].getId() + ";" + p.getMur()[2].getId() + ";" + p.getMur()[3].getId() + ";" + p.getN().getId());
             }
@@ -100,28 +100,28 @@ public class Enregistrement {
             //enregistrement de tous les sols et plafonds de pièces
             b.write("Format d'\u00e9criture pour un sol ou un plafond: id;id_niveau;nom_revetement");
             b.newLine();
-            b.write("<fr.insa.rey_trenchant_virquin.devis_batiment.Sol>");
+            b.write("<Sol>");
             b.newLine();
             //enregistrement de tous les sols si la liste n'est pas vide
-            if (!Batiment.ListSol.isEmpty()) {
+            if (!Gestion.ListSol.isEmpty()) {
                 for (Sol s: Batiment.ListSol) {
                     b.write(s.getId() + ";" + s.getN().getId() + ";" + s.getR().getNom());
                     b.newLine();
                 }
             }
             b.newLine();
-            b.write("</fr.insa.rey_trenchant_virquin.devis_batiment.Sol>");
+            b.write("<Sol>");
             b.newLine();
-            b.write("<fr.insa.rey_trenchant_virquin.devis_batiment.Plafond>");
+            b.write("<Plafond>");
             b.newLine();
             //enregistrement de tous les plafonds si la liste n'est pas vide
-            if (!Batiment.ListPlafond.isEmpty()) {
+            if (!Gestion.ListPlafond.isEmpty()) {
                 for (Plafond p: Batiment.ListPlafond) {
                     b.write(p.getId() + ";" + p.getN().getId() + ";" + p.getR().getNom());
                     b.newLine();
                 }
             }
-            b.write("</fr.insa.rey_trenchant_virquin.devis_batiment.Plafond>");
+            b.write("<Plafond>");
             b.newLine();
             b.write("Fin du fichier.");
             b.newLine();

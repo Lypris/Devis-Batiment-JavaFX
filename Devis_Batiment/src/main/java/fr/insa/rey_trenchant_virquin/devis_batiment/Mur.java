@@ -3,6 +3,7 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -22,6 +23,7 @@ public class Mur {
     private List<Porte> ListPorte = new ArrayList<>();
     private List<Fenetre> ListFenetre = new ArrayList<>();
     private Revetement R;
+    public static int idm=0;
     
     
     public Mur(Coin debut, Coin fin, Niveau niv, List<Porte> ListPorte, List<Fenetre> ListFenetre, int id, Revetement rev){
@@ -111,10 +113,10 @@ public class Mur {
         Coin c1 = Objfromid.CoinFromId(debut);
         Coin c2 = Objfromid.CoinFromId(fin);
         if(Verification.possibleMur(c1,c2)){
-            Gestion.idm++;
+            idm++;
             List<Porte> ListPorte = new ArrayList<>();
             List<Fenetre> ListFenetre = new ArrayList<>();
-            Mur m = new Mur (c1, c2, Objfromid.NiveauFromId(Gestion.niv_actu), ListPorte, ListFenetre, Gestion.idm, null);
+            Mur m = new Mur (c1, c2, Objfromid.NiveauFromId(HelloApplication.niv_actu), ListPorte, ListFenetre, idm, null);
             Gestion.ListMur.add(m);
             System.out.println(m);
         }

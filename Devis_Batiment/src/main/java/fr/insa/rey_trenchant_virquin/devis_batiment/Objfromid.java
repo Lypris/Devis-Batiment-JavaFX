@@ -3,6 +3,8 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 /**
  *
  * @author evant
@@ -29,12 +31,20 @@ public class Objfromid {
     }
     
     public static Niveau NiveauFromId(int id){ //permet de retrouver un niv depuis son id
-        for (Niveau niv : Gestion.ListNiveau){
-            if(niv.getId()==id){
-                return niv;
-            }
+        //on vérifie que la liste de niveaux n'est pas vide
+        if(Gestion.ListNiveau.isEmpty()){
+            System.out.println("La liste de niveaux est vide");
+            return null;
         }
-        return null;
+        else{
+            for (Niveau niv : Gestion.ListNiveau){
+                if(niv.getId()==id){
+                    return niv;
+                }
+            }
+            System.out.println("Aucun niveau ne correspond à l'identifiant " + id);
+            return null;
+        }
     }
     
     public static Piece PieceFromId(int id){ //permet de retrouver un mur depuis son id
