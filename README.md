@@ -10,17 +10,16 @@ Pour sauvegarder les modifications sur le GitHub : Team/commit puis Team/Remote/
 
 ## Problèmes
 
+- Problème lors de l'annulation de la création d'un niveau/ changement de hauteur d'un niveau existant : il faudrait revenir à l'état précédent du niveau (avant la création/ modification)
 - Implémentation/ Changements pour le système de création de bâtiment avec le choix parmi immeuble et maison
-- ne trouve pas la méthode appliquerrevetement() dans les autres classes suite à l'implémentation de la méthode dans la classe Revetement.(syntaxe privilégié : Revetement.Appliquerrevetement())
-- Classe Bâtiment à finir
 - Classe Devis à continuer (comprendre comment écrire dans un fichier xls)
 
 ## Choses à ajouter
 
-- [ ] Créer une fenêtre de création de niveau : choix de la hauteur sous plafond, bouton annuler, bouton ok.
-- [ ] Double clique sur un niveau : fenêtre pour modifier la hauteur sous plafond
-- [ ] Ajouter un canvas à chaque tab (niveau) + grille de dessin
-- [ ] Méthode pour dessiner un point
+- [x] Créer une fenêtre de création de niveau : choix de la hauteur sous plafond, bouton annuler, bouton ok.
+- [x] Clique droit sur un niveau : fenêtre pour modifier la hauteur sous plafond
+- [x] Ajouter un canvas à chaque tab (niveau) + grille de dessin
+- [x] Méthode pour dessiner un point
 - [ ] Méthode pour placer le point sur des valeurs « intelligentes »
 - [ ] Méthode pour dessiner un mur
 - [ ] 
