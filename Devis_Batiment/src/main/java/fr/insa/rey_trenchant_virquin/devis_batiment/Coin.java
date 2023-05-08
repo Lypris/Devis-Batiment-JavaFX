@@ -71,11 +71,6 @@ public class Coin {
         }
         
     }
-
-    public void dessine(GraphicsContext context) {
-        context.setFill(Color.BLACK);
-        context.fillOval(this.x-RAYON_DESSIN, this.y-RAYON_DESSIN,2*RAYON_DESSIN, 2*RAYON_DESSIN);
-    }
 }
     
     

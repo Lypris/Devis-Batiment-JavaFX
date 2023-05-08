@@ -57,7 +57,7 @@
      <HBox fx:id="HBoxButtons" alignment="CENTER_LEFT" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER">
          <children>
             <Label fx:id="l1" text="Création" />
-            <Button mnemonicParsing="false">
+            <Button fx:id="CoinButton" mnemonicParsing="false">
              <tooltip>
                  <Tooltip text="Coin: permet de créer des coins sur le niveau sélectionné." />
              </tooltip>
@@ -154,7 +154,7 @@
              </Button>
             <Separator fx:id="SeparatorControls" orientation="VERTICAL" />
             <Label fx:id="l2" text="Contrôles" />
-            <Button mnemonicParsing="false">
+            <Button fx:id="CursorButton" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>

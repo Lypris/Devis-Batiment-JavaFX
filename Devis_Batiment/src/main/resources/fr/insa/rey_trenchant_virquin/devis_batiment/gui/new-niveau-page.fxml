@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.insa.rey_trenchant_virquin.devis_batiment.gui.NewNiveauController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" text="Veuillez entrer une hauteur afin de créer le Niveau:" />
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Veuillez entrer une hauteur pour ce niveau:" />
+      <TextField fx:id="FieldHauteur">
+         <VBox.margin>
+            <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+      </TextField>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="FieldHauteur" />
-            <Button fx:id="ButtonCreateLevel" mnemonicParsing="false" text="Créer" />
+            <Button fx:id="ButtonCancel" contentDisplay="CENTER" mnemonicParsing="false" text="Annuler">
+               <HBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="ButtonCreateLevel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Valider">
+               <HBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </children>

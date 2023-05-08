@@ -6,6 +6,7 @@ import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -35,7 +36,7 @@ public class MainPageController implements Initializable {
     @FXML
     private MenuItem SaveAs;
     @FXML
-    protected Button CoinButton;
+    protected Button CoinButton, CursorButton;
     static boolean create_coin = false;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -80,16 +81,21 @@ public class MainPageController implements Initializable {
         SaveAs.setOnAction(event -> {
             saveAs();
         });
-        //action lors d'un clic sur le bouton coin : on change le curseur de la souris et on attend un clic de l'utilisateur
+
+
+        //action lors d'un clic sur le bouton coin : on change le curseur de la souris
         CoinButton.setOnAction(event -> {
             Scene scene = CoinButton.getScene();
             scene.setCursor(javafx.scene.Cursor.CROSSHAIR);
-            if(create_coin == false){
-                create_coin = true;
-            }else{
-                create_coin = false;
-            }
+            create_coin = true;
         });
+        //action lors d'un clic sur le bouton curseur : on change le curseur de la souris
+        CursorButton.setOnAction(event -> {
+            Scene scene = CursorButton.getScene();
+            scene.setCursor(javafx.scene.Cursor.DEFAULT);
+            create_coin = false;
+        });
+
     }
     public void selectItem(){
 
