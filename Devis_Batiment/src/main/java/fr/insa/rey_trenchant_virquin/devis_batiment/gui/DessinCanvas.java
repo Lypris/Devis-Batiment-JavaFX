@@ -2,6 +2,8 @@ package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.Coin;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.MouseEvent;
@@ -60,8 +62,8 @@ public class DessinCanvas extends Canvas {
         // Add the mouse click event listener for drawing corners
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (MainPageController.create_coin) {
-                double x = event.getX() / zoomLevel - translate.getX() / zoomLevel;
-                double y = event.getY() / zoomLevel - translate.getY() / zoomLevel;
+                double x = (event.getX() - translate.getX()) / zoomLevel;
+                double y = (event.getY() - translate.getY()) / zoomLevel;
                 Coin coin = Coin.creerCoin(x, y);
                 Gestion.ListCoin.add(coin);
                 dessineCoin(coin);
@@ -78,14 +80,25 @@ public class DessinCanvas extends Canvas {
         this.getGraphicsContext2D().fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
     }
 
+    public void dessineMur(Coin coin1, Coin coin2) {
+        double x1 = coin1.getX() * zoomLevel + translate.getX();
+        double y1 = coin1.getY() * zoomLevel + translate.getY();
+        double x2 = coin2.getX() * zoomLevel + translate.getX();
+        double y2 = coin2.getY() * zoomLevel + translate.getY();
+        double lineWidth = 2.0;
+        this.getGraphicsContext2D().setStroke(Color.BLACK);
+        this.getGraphicsContext2D().setLineWidth(lineWidth);
+        this.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
+    }
+
     // Method that draws the grid on the canvas
     public void drawGrid() {
         double gridSize = 100 * zoomLevel;
         double subGridSize = gridSize / 10;
-        double left = -translate.getX() / zoomLevel;
-        double top = -translate.getY() / zoomLevel;
-        double right = (getWidth() - translate.getX()) / zoomLevel;
-        double bottom = (getHeight() - translate.getY()) / zoomLevel;
+        double left = -translate.getX() / zoomLevel - getWidth() / 2 / zoomLevel;
+        double top = -translate.getY() / zoomLevel - getHeight() / 2 / zoomLevel;
+        double right = left + getWidth() / zoomLevel;
+        double bottom = top + getHeight() / zoomLevel;
         this.getGraphicsContext2D().clearRect(0, 0, this.getWidth(), this.getHeight());
         // Draw large tiles with black outlines
         this.getGraphicsContext2D().setStroke(Color.BLACK);
