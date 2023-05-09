@@ -217,15 +217,7 @@ public class DessinCanvas extends Canvas {
             this.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
         }
     }
-
-    // Method that draws a corner on the canvas
-    public void dessineCoin(Coin coin) {
-        double x = coin.getX() * zoomLevel + translate.getX();
-        double y = coin.getY() * zoomLevel + translate.getY();
-        double radius = 5.0;
-        this.getGraphicsContext2D().setFill(Color.BLACK);
-        this.getGraphicsContext2D().fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
-    }
+   // Méthode intelligent qui dessine un coin en fonction de la grille
     public void dessineCoinSmart(MouseEvent event) {
         double gridSize = 100 * zoomLevel;
         double subGridSize = gridSize / 10;
@@ -240,7 +232,9 @@ public class DessinCanvas extends Canvas {
             System.out.println("Erreur : coin non créé");
         }
     }
-
+    public void dessineCoin(Coin coin) {
+        coin.dessine(this.getGraphicsContext2D(), zoomLevel, translate);
+    }
     public void dessineMur(Mur m) {
         m.dessine(this.getGraphicsContext2D(), zoomLevel, translate);
     }

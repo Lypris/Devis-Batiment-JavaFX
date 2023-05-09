@@ -6,6 +6,7 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
 import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Translate;
 
 import static fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid.NiveauFromId;
 
@@ -21,7 +22,6 @@ public class Coin {
     private int id;
     private Niveau niv;
     private static int idcoin=0;
-    public static double RAYON_DESSIN = 5;
     
     public Coin(double x, double y, Niveau niv, int id){
         this.niv =niv;
@@ -70,6 +70,14 @@ public class Coin {
             return c;
         }
         
+    }
+
+    public void dessine(GraphicsContext gc, double zoomLevel, Translate translate) {
+        double x = this.getX() * zoomLevel + translate.getX();
+        double y = this.getY() * zoomLevel + translate.getY();
+        double radius = 5.0;
+        gc.setFill(Color.BLACK);
+        gc.fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
     }
 }
     
