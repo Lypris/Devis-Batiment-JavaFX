@@ -88,14 +88,14 @@ public class Piece {
             }
             Coin[] coin = SetCoin.toArray(new Coin[4]); //conversion du set en tableau
             idpiece++;
-            Piece p = new Piece (mur, coin, Gestion.ListNiveau.get(HelloApplication.niv_actu), idpiece);
-            Sol sol = new Sol (mur, coin, Gestion.ListNiveau.get(HelloApplication.niv_actu), idpiece, null, null);
-            Plafond plafond = new Plafond (mur, coin, Gestion.ListNiveau.get(HelloApplication.niv_actu), idpiece, null, null);
+            Piece p = new Piece (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece);
+            Sol sol = new Sol (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece, null, null);
+            Plafond plafond = new Plafond (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece, null, null);
             Gestion.ListPiece.add(p);
             Gestion.ListSol.add(sol);
             Gestion.ListPlafond.add(plafond);
             //ajout de la piece dans la liste des pièces du niveau.
-            Gestion.ListNiveau.get(HelloApplication.niv_actu).addPiece(p);
+            Gestion.ListNiveau.get(Gestion.niv_actu).addPiece(p);
             System.out.println(p);
             System.out.println("Quel nom souhaitez vous donner à votre pièce ?");
             p.setNom(Lire.S());

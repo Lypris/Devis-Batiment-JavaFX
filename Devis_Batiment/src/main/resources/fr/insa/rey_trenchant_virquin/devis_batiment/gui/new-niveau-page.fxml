@@ -13,7 +13,7 @@
       <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
    </padding>
    <children>
-      <Label fx:id="sous-titre" alignment="CENTER" contentDisplay="CENTER" text="Veuillez entrer une hauteur pour ce niveau:" />
+      <Label fx:id="sous_titre" alignment="CENTER" contentDisplay="CENTER" text="Veuillez entrer une hauteur pour ce niveau:" />
       <TextField fx:id="FieldHauteur">
          <VBox.margin>
             <Insets top="10.0" bottom="10.0"/>

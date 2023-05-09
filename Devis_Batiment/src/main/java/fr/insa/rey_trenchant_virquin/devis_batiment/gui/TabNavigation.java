@@ -3,10 +3,12 @@ package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Niveau;
+import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,12 +23,29 @@ public class TabNavigation {
         // Ajoute un onglet par défaut avec un niveau correspondant
         Niveau defaultNiveau = new Niveau(1, 2.5);
         Gestion.ListNiveau.add(defaultNiveau);
+        System.out.println(Gestion.ListNiveau);
         Tab defaultTab = new Tab("Niveau 1");
-        DessinCanvas defaultCanvas = new DessinCanvas(0, 0); // set initial width and height to 0
-        defaultTab.setContent(defaultCanvas);
+        DessinCanvas defaultCanvas = new DessinCanvas(0, 0);
+        defaultCanvas.setWidth(tabPane.getWidth());
+        defaultCanvas.setHeight(tabPane.getHeight());
+        Pane defaultPane = new Pane(defaultCanvas);
+        defaultTab.setContent(defaultPane);
         defaultTab.setUserData(defaultNiveau);
+        defaultCanvas.drawGrid();
         tabPane.getTabs().add(0, defaultTab);
         tabPane.getSelectionModel().select(defaultTab);
+        // Add a context menu to each tab for right-click events
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem changeHeightMenuItem = new MenuItem("Changer la hauteur du niveau");
+        changeHeightMenuItem.setOnAction(e -> {
+            // Appel de la méthode pour changer la hauteur du niveau
+            changeLevelHeight();
+        });
+        contextMenu.getItems().add(changeHeightMenuItem);
+
+        for (Tab tab : tabPane.getTabs()) {
+            tab.setContextMenu(contextMenu);
+        }
 
         // Redraw the grid when the default tab is shown
         defaultTab.setOnSelectionChanged(event -> {
@@ -37,20 +56,18 @@ public class TabNavigation {
             }
         });
 
-        // Récupère la liste des onglets
-        List<Tab> tabs = tabPane.getTabs();
-
         // Ajoute un événement de sélection sur le Tab "+"
         addTab.setOnSelectionChanged(event ->  {
-            int tabIndex = tabs.size() - 1;
+            int tabIndex = tabPane.getTabs().size() - 1;
             // on crée le nouveau niveau avec la hauteur saisie par l'utilisateur
             Niveau newNiveau = Niveau.creerNiveau(tabIndex + 1);
             System.out.println(Gestion.ListNiveau);
             // on crée le nouveau tab avec un DessinCanvas
             Tab newTab = new Tab("Niveau " + newNiveau.getId());
             DessinCanvas canvas = new DessinCanvas(tabPane.getWidth(), tabPane.getHeight());
-            newTab.setContent(canvas);
             canvas.drawGrid();
+            newTab.setContent(new Pane(canvas));
+            newTab.setContextMenu(contextMenu);
             newTab.setUserData(newNiveau);
             // on ajoute le nouveau tab au tabPane
             tabPane.getTabs().add(tabIndex, newTab);
@@ -63,7 +80,8 @@ public class TabNavigation {
                 if (change.wasRemoved()) {
                     // Supprime le niveau correspondant
                     for (Tab tab : change.getRemoved()) {
-                        Gestion.ListNiveau.remove(tab.getUserData());
+                        Niveau niveau = (Niveau) tab.getUserData();
+                        Gestion.ListNiveau.remove(niveau);
                     }
                     // Met à jour les identifiants des niveaux
                     int i = 1;
@@ -72,7 +90,8 @@ public class TabNavigation {
                         if (niveau != null){
                             niveau.changeId(i++);
                             tab.setText("Niveau " + niveau.getId());
-                            tab.setContent(new TextArea("Niveau " + niveau.getId()));
+                            //TODO : mettre à jour le dessin du canvas en récupérant les données du niveau
+                            tab.setContent(new DessinCanvas(0, 0));
                         }
                     }
                 } else if (change.wasUpdated()) {
@@ -83,56 +102,88 @@ public class TabNavigation {
                             Niveau niveau = (Niveau) tab.getUserData();
                             niveau.changeId(i + 1);
                             tab.setText("Niveau " + niveau.getId());
-                            tab.setContent(new TextArea("Niveau " + niveau.getId()));
+                            //TODO : mettre à jour le dessin du canvas en récupérant les données du niveau
+                            tab.setContent(new DessinCanvas(0,0));
                         }
                     }
                 }
             }
         });
-        //Ajoute un écouteur sur la sélection d'un onglet: met à jour le niveau actuel niv_actu
+        // Listener pour le changement d'onglet: on met à jour le niveau actuel et on redessine le canvas
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                Gestion.niv_actu = tabPane.getSelectionModel().getSelectedIndex()+1;
-                System.out.println("Niveau actuel: " + Gestion.niv_actu);
+            if (newValue != null && newValue.getContent() instanceof Pane) {
+                Pane pane = (Pane) newValue.getContent();
+                if (!pane.getChildren().isEmpty()) { // Check if the list is not empty
+                    Node node = pane.getChildren().get(0);
+                    if (node instanceof DessinCanvas) {
+                        //TODO : récupérer les données du niveau et les passer en paramètre de redrawAll
+                        int id = ((Niveau) newValue.getUserData()).getId();
+                        ((DessinCanvas) node).redrawAll(Objfromid.NiveauFromId(id));
+                        ((DessinCanvas) node).setWidth(tabPane.getWidth());
+                        ((DessinCanvas) node).setHeight(tabPane.getHeight());
+                    }
+                }
             }
+            // On met à jour le niveau actuel
+            Gestion.niv_actu = tabPane.getSelectionModel().getSelectedIndex() + 1;
+            System.out.println("Niveau actuel: " + Gestion.niv_actu);
         });
 
         //Ajouter un écouteur sur le redimensionnement du tabpane: redimensionne les canvas des onglets
         tabPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            for (Tab tab : tabPane.getTabs()) {
-                Node tabContent = tab.getContent();
-                if (tabContent instanceof DessinCanvas) {
-                    ((DessinCanvas) tabContent).setWidth(newValue.doubleValue());
-                    ((DessinCanvas) tabContent).drawGrid();
-                }
-            }
-        });
-        //TODO: ajouter un écouteur sur le clique droit de la souris sur un tab
-        //ajout d'une action lors d'un clique droit de la souris sur un tab: propose dans l'interface de définir une hauteur pour le niveau correspondant
-        tabPane.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.SECONDARY) {
-                //afficher un petit menu déroulant avec le choix: modifier la hauteur du niveau
-                ContextMenu contextMenu = new ContextMenu();
-                MenuItem changeHeightMenuItem = new MenuItem("Changer la hauteur du niveau");
-                changeHeightMenuItem.setOnAction(e -> {
-                    // Appel de la méthode pour changer la hauteur du niveau
-                    changeLevelHeight();
-                });
-                contextMenu.getItems().add(changeHeightMenuItem);
-
-                // Add a context menu to each tab
+            if (!newValue.equals(oldValue)) { // Check if the new value is different from the old value
                 for (Tab tab : tabPane.getTabs()) {
-                    tab.setContextMenu(contextMenu);
+                    if (tab.getContent() instanceof Pane) {
+                        Pane pane = (Pane) tab.getContent();
+                        if (!pane.getChildren().isEmpty()) { // Check if the list is not empty
+                            Node node = pane.getChildren().get(0);
+                            if (node instanceof DessinCanvas) {
+                                ((DessinCanvas) node).setWidth(newValue.doubleValue());
+                                //TODO: récupérer les données du niveau et les passer en paramètre de redrawAll
+                                int id = ((Niveau) tab.getUserData()).getId();
+                                ((DessinCanvas) node).redrawAll(Objfromid.NiveauFromId(id));
+                            }
+                        }
+                        System.out.println("Width: " + newValue.doubleValue()); //TODO: supprimer
+                    }
                 }
-
             }
         });
 
+        tabPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.equals(oldValue)) { // Check if the new value is different from the old value
+                for (Tab tab : tabPane.getTabs()) {
+                    if (tab.getContent() instanceof Pane) {
+                        Pane pane = (Pane) tab.getContent();
+                        if (!pane.getChildren().isEmpty()) { // Check if the list is not empty
+                            Node node = pane.getChildren().get(0);
+                            if (node instanceof DessinCanvas) {
+                                ((DessinCanvas) node).setHeight(newValue.doubleValue());
+                                //TODO: récupérer les données du niveau et les passer en paramètre de redrawAll
+                                int id = ((Niveau) tab.getUserData()).getId();
+                                ((DessinCanvas) node).redrawAll(Objfromid.NiveauFromId(id));
+                            }
+                        }
+                        System.out.println("Height: " + newValue.doubleValue()); //TODO: supprimer
+                    }
+                }
+            }
+        });
+        // Add a listener to the tab pane to handle double-click events
+        tabPane.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                // Get the selected tab
+                Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+
+                // Check if the content of the selected tab is an instance of DessinCanvas
+                if (selectedTab.getContent() instanceof DessinCanvas) {
+                    // Call the method to change the level height
+                    changeLevelHeight();
+                }
+            }
+        });
     }
 
-    public TabPane getTabPane() {
-        return tabPane;
-    }
     // Method to change the height of the level
     private void changeLevelHeight() {
         try {

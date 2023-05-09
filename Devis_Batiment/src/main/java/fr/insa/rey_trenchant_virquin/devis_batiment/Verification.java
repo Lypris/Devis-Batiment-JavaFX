@@ -1,7 +1,4 @@
-package fr.insa.rey_trenchant_virquin.devis_batiment;/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package fr.insa.rey_trenchant_virquin.devis_batiment;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 
@@ -18,20 +15,33 @@ public class Verification {
         // cette methode vérifie que les coins debut et fin sont en capacité de créer un mur
         
         // les coins existe
-        if(!Gestion.ListCoin.contains(debut) || !Gestion.ListCoin.contains(fin)) return false;
+        if(!Gestion.ListCoin.contains(debut) || !Gestion.ListCoin.contains(fin)){
+            System.out.println("Les coins n'existent pas");
+            return false;
+        }
         // les coins appartiennent au meme niveau
-        if(debut.getNiv() != Objfromid.NiveauFromId(HelloApplication.niv_actu) || fin.getNiv() != Objfromid.NiveauFromId(HelloApplication.niv_actu)) return false;
+        if(debut.getNiv() != Objfromid.NiveauFromId(Gestion.niv_actu) || fin.getNiv() != Objfromid.NiveauFromId(Gestion.niv_actu)){
+            System.out.println("Les coins n'appartiennent pas au même niveau");
+            return false;
+        }
         // les coins sont différents
-        if(debut == fin) return false;
+        if(debut == fin){
+            System.out.println("Les coins sont les mêmes");
+            return false;
+        }
         // les coins sont alignés
-        if(debut.getX()!= fin.getX() && debut.getY()!= fin.getY()) return false;
+        if(debut.getX()!= fin.getX() && debut.getY()!= fin.getY()){
+            System.out.println("Les coins ne sont pas alignés");
+            return false;
+        }
         // les coins ne constituent pas déjà le même mur
         for (Mur m : Gestion.ListMur){
             if (m.getDebut()==debut && m.getFin()==fin || m.getDebut()==fin && m.getFin()==debut){
-                return false; 
+                System.out.println("Les coins constituent déjà le même mur");
+                return false;
             }
         }
-        /*// Empêcher deux murs de se traverser/ couper (version RUDY)
+        // Empêcher deux murs de se superposer (version RUDY)
         for (fr.insa.rey_trenchant_virquin.devis_batiment.Mur m : fr.insa.rey_trenchant_virquin.devis_batiment.Gestion.ListMur){
             if (m.getDebut().getX() == m.getFin().getX() && debut.getX() == fin.getX()){ // si les deux murs sont verticaux
                 if (m.getDebut().getX() == debut.getX()){ // si les deux murs sont sur la même colonne
@@ -47,7 +57,7 @@ public class Verification {
                     }
                 }
             }
-        }*/
+        }
         //// Empêcher deux murs de se traverser/couper perpendiculairement (version Evan)
         for (Mur m : Gestion.ListMur){
             // si le  mur(m) est verticale et celui en construction horizontale.

@@ -4,8 +4,6 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  */
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,24 +102,18 @@ public class Mur {
 
 
     
-    public static void creerMur(){
-        System.out.println(Gestion.ListCoin);
-        System.out.println("Saisissez l'identifiant du coin de début de votre mur:");
-        int debut = Lire.i();
-        System.out.println("Saisissez l'identifiant du coin de fin de votre mur:");
-        int fin = Lire.i();
-        Coin c1 = Objfromid.CoinFromId(debut);
-        Coin c2 = Objfromid.CoinFromId(fin);
-        if(Verification.possibleMur(c1,c2)){
+    public static Mur creerMur(Coin c1, Coin c2){
+        if(Verification.possibleMur(c1,c2)) {
             idm++;
             List<Porte> ListPorte = new ArrayList<>();
             List<Fenetre> ListFenetre = new ArrayList<>();
-            Mur m = new Mur (c1, c2, Objfromid.NiveauFromId(HelloApplication.niv_actu), ListPorte, ListFenetre, idm, null);
+            Mur m = new Mur(c1, c2, Objfromid.NiveauFromId(Gestion.niv_actu), ListPorte, ListFenetre, idm, null);
             Gestion.ListMur.add(m);
             System.out.println(m);
-        }
-        else{
+            return m;
+        }else{
             System.out.println("Impossible de créer un mur entre ces deux coins.");
+            return null;
         }
     }
     
@@ -153,15 +145,11 @@ public class Mur {
     
     @Override
     public String toString() {
-        return "fr.insa.rey_trenchant_virquin.devis_batiment.Mur{" + "id=" + id + ", debut=" + debut.getId() + ", fin=" + fin.getId() + ", niveau=" + niv.getId() + ", Surface du mur à couvrir : " + surface() + "m²" + '}';
+        return "Mur{" + "id=" + id + ", debut=" + debut.getId() + ", fin=" + fin.getId() + ", niveau=" + niv.getId() + ", Surface du mur à couvrir : " + surface() + "m²" + '}';
     }
 
     public boolean estVertical() {
         return this.debut.getX() == this.fin.getX();
-    }
-    public void dessine(GraphicsContext context){
-        context.setStroke(Color.BLACK);
-        context.strokeLine(this.debut.getX(), this.debut.getY(), this.fin.getX(), this.fin.getY());
     }
 
     

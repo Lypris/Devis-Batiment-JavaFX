@@ -54,7 +54,7 @@ public class Coin {
         boolean doublons = false;
         //vérifie si le coin existe déjà dans ce niveau
         for (Coin c : Gestion.ListCoin){
-            if (c.getX()==x && c.getY()==y ){
+            if (c.getX()==x && c.getY()==y && c.getNiv()==NiveauFromId(Gestion.niv_actu)){
                 doublons=true;
                 break;
             }

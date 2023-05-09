@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     public static Batiment bâtiment;
-    public static int niv_actu=1; //id du niveau sur lequel on travaille
     @Override
     public void start(Stage stage) {
         try {

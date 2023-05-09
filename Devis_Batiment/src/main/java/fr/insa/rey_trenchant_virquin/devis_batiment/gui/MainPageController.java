@@ -6,6 +6,7 @@ import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -36,8 +37,13 @@ public class MainPageController implements Initializable {
     @FXML
     private MenuItem SaveAs;
     @FXML
-    protected Button CoinButton, CursorButton;
+    protected Button CoinButton, CursorButton, MurButton, PorteButton, PieceButton, FenetreButton, TremieButton;
     static boolean create_coin = false;
+    static boolean create_mur = false;
+    static boolean create_porte = false;
+    static boolean create_piece = false;
+    static boolean create_fenetre = false;
+    static boolean create_tremie = false;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Obtenez la hauteur et la largeur de l'écran de l'utilisateur
@@ -88,12 +94,28 @@ public class MainPageController implements Initializable {
             Scene scene = CoinButton.getScene();
             scene.setCursor(javafx.scene.Cursor.CROSSHAIR);
             create_coin = true;
+            create_mur = false;
+        });
+        //action lors d'un clic sur le bouton mur : on change le curseur de la souris
+        MurButton.setOnAction(event -> {
+            Scene scene = MurButton.getScene();
+            scene.setCursor(Cursor.HAND);
+            create_mur = true;
+            create_coin = false;
+        });
+        //action lors d'un clic sur le bouton piece : on change le curseur de la souris
+        PieceButton.setOnAction(event -> {
+            Scene scene = PieceButton.getScene();
+            scene.setCursor(javafx.scene.Cursor.CROSSHAIR);
+            create_piece = true;
         });
         //action lors d'un clic sur le bouton curseur : on change le curseur de la souris
         CursorButton.setOnAction(event -> {
             Scene scene = CursorButton.getScene();
             scene.setCursor(javafx.scene.Cursor.DEFAULT);
             create_coin = false;
+            create_mur = false;
+            create_piece = false;
         });
 
     }
