@@ -105,10 +105,10 @@ public class Niveau {
         Parent root = FXMLLoader.load(HelloApplication.class.getResource("new-niveau-page.fxml"));
         stage = new Stage();
         scene = new Scene(root, primaryScreenBounds.getWidth()*0.3, primaryScreenBounds.getHeight()*0.4);
+        scene.getStylesheets().add(HelloApplication.class.getResource("new-niveau-page-style.CSS").toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Choix de la hauteur du niveau");
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
 
