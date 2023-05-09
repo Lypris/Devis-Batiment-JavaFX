@@ -46,6 +46,7 @@ public class Verification {
             if (m.getDebut().getX() == m.getFin().getX() && debut.getX() == fin.getX()){ // si les deux murs sont verticaux
                 if (m.getDebut().getX() == debut.getX()){ // si les deux murs sont sur la même colonne
                     if (m.getDebut().getY() < debut.getY() && m.getFin().getY() > fin.getY() || m.getDebut().getY() > debut.getY() && m.getFin().getY() < fin.getY()){ // si les deux murs se croisent
+                        System.out.println("Les murs se superposent");
                         return false;
                     }
                 }
@@ -53,6 +54,7 @@ public class Verification {
             if (m.getDebut().getY() == m.getFin().getY() && debut.getY() == fin.getY()){ // si les deux murs sont horizontaux
                 if (m.getDebut().getY() == debut.getY()){ // si les deux murs sont sur la même ligne
                     if (m.getDebut().getX() < debut.getX() && m.getFin().getX() > fin.getX() || m.getDebut().getX() > debut.getX() && m.getFin().getX() < fin.getX()){ // si les deux murs se croisent
+                        System.out.println("Les murs se superposent");
                         return false;
                     }
                 }
@@ -66,6 +68,7 @@ public class Verification {
                 if (m.getDebut().getY()<debut.getY() && m.getFin().getY()>debut.getY() || m.getDebut().getY()>debut.getY() && m.getFin().getY()<debut.getY()){
                     //si un coin du mur(m) est à gauche du mur construit et l'autre coin en dessous.(les murs ont une chance de se croiser)
                     if(m.getDebut().getX()<debut.getX() && m.getDebut().getX()>fin.getX() || m.getDebut().getX()>debut.getX() && m.getDebut().getX()<fin.getX()){
+                        System.out.println("Les murs se croisent");
                         return false;
                     }
                 }
@@ -76,6 +79,7 @@ public class Verification {
                 if (m.getDebut().getY()<debut.getY() && m.getFin().getY()>debut.getY() || m.getDebut().getY()>debut.getY() && m.getFin().getY()<debut.getY()){
                     //si un coin du mur(m) est à gauche du mur construit et l'autre coin en dessous.(les murs ont une chance de se croiser)
                     if(m.getDebut().getX()<debut.getX() && m.getDebut().getX()>fin.getX() || m.getDebut().getX()>debut.getX() && m.getDebut().getX()<fin.getX()){
+                        System.out.println("Les murs se croisent");
                         return false;
                     }
                 }

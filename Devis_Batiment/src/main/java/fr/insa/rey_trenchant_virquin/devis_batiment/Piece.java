@@ -65,18 +65,9 @@ public class Piece {
         return n;
     }
 
-    public static void creerPieceDepuisMur() {
+    public static Piece creerPieceDepuisMur(int I, int II, int III, int IV) {
 
         System.out.println(Gestion.ListMur);
-        System.out.println("Saisissez l'identifiant du premier mur de votre pièce:");
-        int I = Lire.i();
-        System.out.println("Saisissez l'identifiant du deuxième mur de votre pièce:");
-        int II = Lire.i();
-        System.out.println("Saisissez l'identifiant du troisième mur de votre pièce:");
-        int III = Lire.i();
-        System.out.println("Saisissez l'identifiant du quatrième mur de votre pièce:");
-        int IV = Lire.i();
-
         if(Verification.possiblePiece(I ,II, III, IV)){
             Mur [] mur = {Objfromid.MurFromId(I), Objfromid.MurFromId(II), Objfromid.MurFromId(III), Objfromid.MurFromId(IV)};
             //création d'un Set contenant les coins des murs
@@ -88,21 +79,19 @@ public class Piece {
             }
             Coin[] coin = SetCoin.toArray(new Coin[4]); //conversion du set en tableau
             idpiece++;
-            Piece p = new Piece (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece);
-            Sol sol = new Sol (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece, null, null);
-            Plafond plafond = new Plafond (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu), idpiece, null, null);
+            Piece p = new Piece (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu - 1), idpiece);
+            Sol sol = new Sol (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu - 1), idpiece, null, null);
+            Plafond plafond = new Plafond (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu - 1), idpiece, null, null);
             Gestion.ListPiece.add(p);
             Gestion.ListSol.add(sol);
             Gestion.ListPlafond.add(plafond);
             //ajout de la piece dans la liste des pièces du niveau.
-            Gestion.ListNiveau.get(Gestion.niv_actu).addPiece(p);
+            Gestion.ListNiveau.get(Gestion.niv_actu - 1).addPiece(p);
             System.out.println(p);
-            System.out.println("Quel nom souhaitez vous donner à votre pièce ?");
-            p.setNom(Lire.S());
+            return p;
         }else{
             System.out.println("Votre pièce ne peut pas exister.");
+            return null;
         }
     }
-    
-    
 }

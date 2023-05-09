@@ -52,7 +52,7 @@ public class TabNavigation {
             if (defaultTab.isSelected()) {
                 defaultCanvas.setWidth(tabPane.getWidth());
                 defaultCanvas.setHeight(tabPane.getHeight());
-                defaultCanvas.drawGrid();
+                defaultCanvas.redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
             }
         });
 

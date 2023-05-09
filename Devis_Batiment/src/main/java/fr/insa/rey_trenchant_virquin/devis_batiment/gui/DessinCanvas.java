@@ -1,9 +1,6 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
-import fr.insa.rey_trenchant_virquin.devis_batiment.Coin;
-import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
-import fr.insa.rey_trenchant_virquin.devis_batiment.Mur;
-import fr.insa.rey_trenchant_virquin.devis_batiment.Niveau;
+import fr.insa.rey_trenchant_virquin.devis_batiment.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
@@ -12,11 +9,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid.NiveauFromId;
 
 public class DessinCanvas extends Canvas {
     private double zoomLevel = 1.0;
@@ -27,6 +27,7 @@ public class DessinCanvas extends Canvas {
     private final double MIN_ZOOM_LEVEL = 0.5;
     // Add a list to keep track of selected corners
     private List<Coin> selectedCorners = new ArrayList<>();
+    private List<Mur> selectedMurs = new ArrayList<>();
 
     public DessinCanvas(double width, double height) {
         super(width, height);
@@ -56,7 +57,7 @@ public class DessinCanvas extends Canvas {
             scale.setY(zoomLevel);
             translate.setX(translate.getX() - dx);
             translate.setY(translate.getY() - dy);
-            drawGrid();
+            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
             event.consume();
         });
 
@@ -64,7 +65,7 @@ public class DessinCanvas extends Canvas {
         addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             translate.setX(translate.getX() + event.getX() - getWidth() / 2);
             translate.setY(translate.getY() + event.getY() - getHeight() / 2);
-            drawGrid();
+            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
             event.consume();
         });
 
@@ -75,10 +76,19 @@ public class DessinCanvas extends Canvas {
             }
         });
 
-        // Add a listener to handle corner selection and deselection
+        // Ajout d'un écouteur pour prendre en charge la sélection et la désélection des coins
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (MainPageController.create_mur) {
                 // Get the clicked corner
+                //TODO: à supprimer
+                //affichage de contrôle dans la console: on affiche tous les coins de ce niveau
+                System.out.println("Coins du niveau " + Gestion.niv_actu + " :");
+                for (Coin c : Gestion.ListCoin){
+                    if (c.getNiv()==NiveauFromId(Gestion.niv_actu)) {
+                        System.out.println(c);
+                    }
+                }
+
                 Coin clickedCorner = getClickedCorner(event);
 
                 if (clickedCorner != null) {
@@ -88,7 +98,7 @@ public class DessinCanvas extends Canvas {
                     } else {
                         // Select the corner
                         selectedCorners.add(clickedCorner);
-                        drawSelectedCorners();
+                        drawSelectedCoins();
 
                         // Check if two corners are selected
                         if (selectedCorners.size() == 2) {
@@ -100,48 +110,111 @@ public class DessinCanvas extends Canvas {
                                 System.out.println("Erreur : mur non créé");
                             }
                             selectedCorners.clear();
-                            // Redraw the corners
-                            for (Coin corner : Gestion.ListCoin) {
-                                if(corner.getNiv().getId() == Gestion.niv_actu) {
-                                    dessineCoin(corner);
-                                }
+                            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
+                        }
+                    }
+                }
+            }
+        });
+        //Ajout d'un écouteur pour prendre en charge la sélection et la désélection des murs
+        addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (MainPageController.create_piece) {
+                // Get the clicked wall
+                Mur clickedWall = getSelectedWall(event);
+
+                if (clickedWall != null) {
+                    if (selectedMurs.contains(clickedWall)) {
+                        // Deselect the wall if it's already selected
+                        selectedMurs.remove(clickedWall);
+                    } else {
+                        // Select the wall
+                        selectedMurs.add(clickedWall);
+                        drawSelectedMurs();
+
+                        // On vérifie si 4 murs sont sélectionnés
+                        if (selectedMurs.size() == 4) {
+                            // On créer la pièce avec les murs sélectionnés
+                            Piece p = Piece.creerPieceDepuisMur(selectedMurs.get(0).getId(), selectedMurs.get(1).getId(), selectedMurs.get(2).getId(), selectedMurs.get(3).getId());
+                            if (p!= null){
+                                dessinePiece(p);
+                            } else {
+                                System.out.println("Erreur : pièce non créée");
                             }
+                            selectedMurs.clear();
+                            // On redessine tout
+                            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
+                            System.out.println("Pièce créée");
                         }
                     }
                 }
             }
         });
 
-// Add a listener to handle the ESCAPE key press
+        // Add a listener to handle the ESCAPE key press
         addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 selectedCorners.clear();
+                selectedMurs.clear();
             }
         });
     }
 
-    // Method that returns the clicked corner, or null if no corner was clicked
+    // Méthode qui renvoie le coin cliqué ou null si aucun coin n'est cliqué
     private Coin getClickedCorner(MouseEvent event) {
         double clickRadius = 5.0 / zoomLevel;
         for (Coin corner : Gestion.ListCoin) {
-            double x = corner.getX() * zoomLevel + translate.getX();
-            double y = corner.getY() * zoomLevel + translate.getY();
-            double distance = Math.sqrt(Math.pow(x - event.getX(), 2) + Math.pow(y - event.getY(), 2));
-            if (distance <= clickRadius) {
-                return corner;
+            if (corner.getNiv()==NiveauFromId(Gestion.niv_actu)) {
+                double x = corner.getX() * zoomLevel + translate.getX();
+                double y = corner.getY() * zoomLevel + translate.getY();
+                double distance = Math.sqrt(Math.pow(x - event.getX(), 2) + Math.pow(y - event.getY(), 2));
+                if (distance <= clickRadius) {
+                    return corner;
+                }
+            }
+        }
+        return null;
+    }
+    //Méthode qui renvoie le mur cliqué ou null si aucun mur n'est cliqué
+    public Mur getSelectedWall(MouseEvent event) {
+        double clickRadius = 10.0 / zoomLevel; // Increase the click radius to 10 pixels
+        for (Mur mur : Gestion.ListMur) {
+            if(mur.getNiv() == NiveauFromId(Gestion.niv_actu)) {
+                double x1 = mur.getDebut().getX() * zoomLevel + translate.getX();
+                double y1 = mur.getDebut().getY() * zoomLevel + translate.getY();
+                double x2 = mur.getFin().getX() * zoomLevel + translate.getX();
+                double y2 = mur.getFin().getY() * zoomLevel + translate.getY();
+                double distance1 = Math.sqrt(Math.pow(x1 - event.getX(), 2) + Math.pow(y1 - event.getY(), 2));
+                double distance2 = Math.sqrt(Math.pow(x2 - event.getX(), 2) + Math.pow(y2 - event.getY(), 2));
+                double wallLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)); // Calculate the length of the wall
+                if (distance1 <= clickRadius || distance2 <= clickRadius || distance1 + distance2 <= wallLength + clickRadius) {
+                    System.out.println("Mur sélectionné : " + mur.getId());
+                    return mur;
+                }
             }
         }
         return null;
     }
 
     // Method that draws the selected corners in red
-    private void drawSelectedCorners() {
+    private void drawSelectedCoins() {
         for (Coin corner : selectedCorners) {
             double x = corner.getX() * zoomLevel + translate.getX();
             double y = corner.getY() * zoomLevel + translate.getY();
             double radius = 5.0;
             this.getGraphicsContext2D().setFill(Color.RED);
             this.getGraphicsContext2D().fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
+        }
+    }
+    private void drawSelectedMurs(){
+        for (Mur mur : selectedMurs) {
+            double lineWidth = 2.0;
+            this.getGraphicsContext2D().setStroke(Color.BLUE);
+            this.getGraphicsContext2D().setLineWidth(lineWidth);
+            double x1 = mur.getDebut().getX() * zoomLevel + translate.getX();
+            double y1 = mur.getDebut().getY() * zoomLevel + translate.getY();
+            double x2 = mur.getFin().getX() * zoomLevel + translate.getX();
+            double y2 = mur.getFin().getY() * zoomLevel + translate.getY();
+            this.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
         }
     }
 
@@ -177,6 +250,35 @@ public class DessinCanvas extends Canvas {
         this.getGraphicsContext2D().setStroke(Color.rgb(232, 155, 38));
         this.getGraphicsContext2D().setLineWidth(lineWidth);
         this.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
+    }
+    public void dessinePiece(Piece p) {
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFill(Color.rgb(243, 128, 128, 0.5)); // Pink color with opacity 50%
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double maxY = Double.MIN_VALUE;
+        for (Coin corner : p.getCoin()) {
+            double x = corner.getX();
+            double y = corner.getY();
+            if (x < minX) {
+                minX = x;
+            }
+            if (y < minY) {
+                minY = y;
+            }
+            if (x > maxX) {
+                maxX = x;
+            }
+            if (y > maxY) {
+                maxY = y;
+            }
+        }
+        rectangle.setX(minX * zoomLevel + translate.getX());
+        rectangle.setY(minY * zoomLevel + translate.getY());
+        rectangle.setWidth((maxX - minX) * zoomLevel);
+        rectangle.setHeight((maxY - minY) * zoomLevel);
+        this.getGraphicsContext2D().fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
     }
 
     // Method that draws the grid on the canvas
@@ -217,6 +319,11 @@ public class DessinCanvas extends Canvas {
         for (Mur m : Gestion.ListMur) {
             if(m.getNiv() == niv){
                 dessineMur(m);
+            }
+        }
+        for(Piece p : Gestion.ListPiece){
+            if(p.getN() == niv){
+                dessinePiece(p);
             }
         }
     }

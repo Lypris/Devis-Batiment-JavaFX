@@ -95,6 +95,7 @@ public class MainPageController implements Initializable {
             scene.setCursor(javafx.scene.Cursor.CROSSHAIR);
             create_coin = true;
             create_mur = false;
+            create_piece = false;
         });
         //action lors d'un clic sur le bouton mur : on change le curseur de la souris
         MurButton.setOnAction(event -> {
@@ -102,12 +103,15 @@ public class MainPageController implements Initializable {
             scene.setCursor(Cursor.HAND);
             create_mur = true;
             create_coin = false;
+            create_piece = false;
         });
         //action lors d'un clic sur le bouton piece : on change le curseur de la souris
         PieceButton.setOnAction(event -> {
             Scene scene = PieceButton.getScene();
-            scene.setCursor(javafx.scene.Cursor.CROSSHAIR);
+            scene.setCursor(Cursor.HAND);
             create_piece = true;
+            create_coin = false;
+            create_mur = false;
         });
         //action lors d'un clic sur le bouton curseur : on change le curseur de la souris
         CursorButton.setOnAction(event -> {
