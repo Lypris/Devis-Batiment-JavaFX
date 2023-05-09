@@ -8,6 +8,10 @@ import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.transform.Translate;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 
 /**
  *
@@ -152,5 +156,14 @@ public class Mur {
         return this.debut.getX() == this.fin.getX();
     }
 
-    
+    public void dessine(GraphicsContext gc, double zoomLevel, Translate translate) {
+        double x1 = debut.getX() * zoomLevel + translate.getX();
+        double y1 = debut.getY() * zoomLevel + translate.getY();
+        double x2 = fin.getX() * zoomLevel + translate.getX();
+        double y2 = fin.getY() * zoomLevel + translate.getY();
+        double lineWidth = 2.0;
+        gc.setStroke(Color.rgb(232, 155, 38));
+        gc.setLineWidth(lineWidth);
+        gc.strokeLine(x1, y1, x2, y2);
+    }
 }

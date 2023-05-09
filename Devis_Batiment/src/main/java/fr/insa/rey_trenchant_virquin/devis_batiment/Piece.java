@@ -5,6 +5,10 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Translate;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -93,5 +97,35 @@ public class Piece {
             System.out.println("Votre pièce ne peut pas exister.");
             return null;
         }
+    }
+
+    public void dessine(GraphicsContext gc, double zoomLevel, Translate translate) {
+        Rectangle rectangle = new Rectangle();
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double maxY = Double.MIN_VALUE;
+        for (Coin corner : Coin) {
+            double x = corner.getX();
+            double y = corner.getY();
+            if (x < minX) {
+                minX = x;
+            }
+            if (y < minY) {
+                minY = y;
+            }
+            if (x > maxX) {
+                maxX = x;
+            }
+            if (y > maxY) {
+                maxY = y;
+            }
+        }
+        rectangle.setX(minX * zoomLevel + translate.getX());
+        rectangle.setY(minY * zoomLevel + translate.getY());
+        rectangle.setWidth((maxX - minX) * zoomLevel);
+        rectangle.setHeight((maxY - minY) * zoomLevel);
+        gc.setFill(Color.rgb(243, 128, 128, 0.5)); // Pink color with opacity 50%
+        gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
     }
 }

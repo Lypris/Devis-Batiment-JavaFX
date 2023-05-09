@@ -242,43 +242,10 @@ public class DessinCanvas extends Canvas {
     }
 
     public void dessineMur(Mur m) {
-        double x1 = m.getDebut().getX() * zoomLevel + translate.getX();
-        double y1 = m.getDebut().getY() * zoomLevel + translate.getY();
-        double x2 = m.getFin().getX() * zoomLevel + translate.getX();
-        double y2 = m.getFin().getY() * zoomLevel + translate.getY();
-        double lineWidth = 2.0;
-        this.getGraphicsContext2D().setStroke(Color.rgb(232, 155, 38));
-        this.getGraphicsContext2D().setLineWidth(lineWidth);
-        this.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
+        m.dessine(this.getGraphicsContext2D(), zoomLevel, translate);
     }
     public void dessinePiece(Piece p) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFill(Color.rgb(243, 128, 128, 0.5)); // Pink color with opacity 50%
-        double minX = Double.MAX_VALUE;
-        double minY = Double.MAX_VALUE;
-        double maxX = Double.MIN_VALUE;
-        double maxY = Double.MIN_VALUE;
-        for (Coin corner : p.getCoin()) {
-            double x = corner.getX();
-            double y = corner.getY();
-            if (x < minX) {
-                minX = x;
-            }
-            if (y < minY) {
-                minY = y;
-            }
-            if (x > maxX) {
-                maxX = x;
-            }
-            if (y > maxY) {
-                maxY = y;
-            }
-        }
-        rectangle.setX(minX * zoomLevel + translate.getX());
-        rectangle.setY(minY * zoomLevel + translate.getY());
-        rectangle.setWidth((maxX - minX) * zoomLevel);
-        rectangle.setHeight((maxY - minY) * zoomLevel);
-        this.getGraphicsContext2D().fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+        p.dessine(this.getGraphicsContext2D(), zoomLevel, translate);
     }
 
     // Method that draws the grid on the canvas
