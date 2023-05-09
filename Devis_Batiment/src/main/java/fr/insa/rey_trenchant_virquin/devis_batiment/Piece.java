@@ -9,6 +9,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
+import javafx.geometry.Bounds;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -91,6 +95,8 @@ public class Piece {
             Gestion.ListPlafond.add(plafond);
             //ajout de la piece dans la liste des pièces du niveau.
             Gestion.ListNiveau.get(Gestion.niv_actu - 1).addPiece(p);
+            //système de renommage automatique
+            p.setNom("Piece " + p.getId());
             System.out.println(p);
             return p;
         }else{
@@ -127,5 +133,14 @@ public class Piece {
         rectangle.setHeight((maxY - minY) * zoomLevel);
         gc.setFill(Color.rgb(243, 128, 128, 0.5)); // Pink color with opacity 50%
         gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+        gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setFont(Font.font("Arial", 12));
+        Text text = new Text(getNom());
+        text.setFont(gc.getFont());
+        Bounds bounds = text.getBoundsInLocal();
+        double textX = rectangle.getX() + rectangle.getWidth() / 2;
+        double textY = rectangle.getY() + rectangle.getHeight() / 2 + bounds.getHeight() / 2;
+        gc.fillText(getNom(), textX, textY);
     }
 }
