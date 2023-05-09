@@ -1,0 +1,60 @@
+* {
+    -fx-primary-color: #081f2d;
+    -fx-secondary-color: #00C6B2;
+    -fx-grey-color: #ADC3D6;
+    -fx-darkest-grey-color: #323232;
+    -fx-light-grey-color: #F1F1E6;
+    -fx-orange-color: #E89B26;
+}
+
+#sous-titre {
+    -fx-font-size: 14px;
+    -fx-font-family: "Montserrat-Alt1 ExtBd";
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary-color;
+}
+.text-field {
+    -fx-accent: -fx-primary-color;
+    -fx-background-color: #ADC3D6, #F1F1E6;
+    -fx-background-insets: 0, 0 0 3 0;
+    -fx-background-radius: 0;
+    -fx-prompt-text-fill: #ADC3D6;
+    -fx-font-size: 15px;
+    -fx-text-fill: black;
+    -fx-padding: 2em 2em 2em 2em; /* 10px */
+}
+.text-field:focused {
+    -fx-background-color: #00C6B2, #F1F1E6;
+}
+
+.button {
+    -fx-background-radius: 29px;
+    -fx-border-radius: 29px;
+    -fx-border: 1px;
+    -fx-border-style: solid;
+    -fx-font-size: 15px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: pointer;
+    -fx-transition: 0.3s;
+}
+
+.button:hover {
+    -fx-background-color: -fx-light-grey-color;
+    -fx-background-radius: 29px;
+    -fx-border-radius: 29px;
+    -fx-text-fill: -fx-primary-color;
+    -fx-border-color: -fx-primary-color;
+    -fx-transition: 0.3s;
+}
+
+#ButtonCancel {
+    -fx-background-color: -fx-secondary-color;
+    -fx-border-color: -fx-primary-color;
+    -fx-text-fill: -fx-light-grey-color;
+}
+
+#ButtonCreateLevel {
+    -fx-background-color: -fx-orange-color;
+    -fx-border-color: -fx-orange-color;
+    -fx-text-fill: -fx-darkest-grey-color;
+}
