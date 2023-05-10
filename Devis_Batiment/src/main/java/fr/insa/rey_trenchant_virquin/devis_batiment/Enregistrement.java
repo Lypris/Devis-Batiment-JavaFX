@@ -20,9 +20,10 @@ public class Enregistrement {
     }
     
     
-    public void enregistrerConfigurations(String nomFichier) {
+    public static void enregistrerConfigurations(String nomFichier, String cheminFichier) {
         try {
-            BufferedWriter b = new BufferedWriter(new FileWriter(nomFichier+".txt", true));
+            //on crée un fichier de sauvegarde dans le chemin spécifié par l'utilisateur et au nom spécifié par l'utilisateur
+            BufferedWriter b = new BufferedWriter(new FileWriter(cheminFichier + "\\" + nomFichier + ".txt", true));
             b.write("Ceci est un fichier de sauvegarde de la configuration du bâtiment:");
             b.newLine();
             b.write(HelloApplication.bâtiment.getNom());

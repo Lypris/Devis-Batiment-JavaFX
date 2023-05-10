@@ -1,6 +1,7 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.Coin;
+import fr.insa.rey_trenchant_virquin.devis_batiment.Enregistrement;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
 import javafx.event.ActionEvent;
@@ -138,6 +139,12 @@ public class MainPageController implements Initializable {
         );
         // Afficher la fenêtre de dialogue
         fileChooser.showSaveDialog(null);
+        // On récupère le nom du fichier lorsque le bouton "Enregistrer" est cliqué
+        String fileName = fileChooser.getInitialFileName();
+        // On récupère le chemin du fichier lorsque le bouton "Enregistrer" est cliqué
+        String filePath = fileChooser.getInitialDirectory().toString();
+        //on lance la méthode d'enregistrement
+        Enregistrement.enregistrerConfigurations(fileName, filePath);
     }
 
 
