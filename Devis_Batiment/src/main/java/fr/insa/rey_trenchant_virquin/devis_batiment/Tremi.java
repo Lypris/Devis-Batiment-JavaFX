@@ -27,7 +27,7 @@ public class Tremi extends Ouverture {
         
                 System.out.println("Dans quelle piece voulez vous créer une tremie ?");
                 int id = Lire.i();
-                if (Gestion.ListPiece.contains(Objfromid.PieceFromId(id))){
+                if (HelloApplication.ListPiece.contains(Objfromid.PieceFromId(id))){
                     idouv++;
                     System.out.println("Quelle est la longueur de la tremie ?");
                     double longueur = Lire.d();
@@ -38,7 +38,7 @@ public class Tremi extends Ouverture {
                     String n=Lire.S();
                     switch (n) {
                         case "sol" -> {
-                            if(Gestion.ListSol.contains(Objfromid.SolFromId(id)) && Objfromid.SolFromId(id).surface() > tremi.surface()) {
+                            if(HelloApplication.ListSol.contains(Objfromid.SolFromId(id)) && Objfromid.SolFromId(id).surface() > tremi.surface()) {
                                 Objfromid.SolFromId(id).setTremi(tremi);//ne fonctionne pas
                                 System.out.println("La tremie a été ajoutée au sol indiqué.");
                             }
@@ -50,7 +50,7 @@ public class Tremi extends Ouverture {
                             break;
                         }
                         case "plafond" -> {
-                            if(Gestion.ListPlafond.contains(Objfromid.PlafondFromId(id)) && Objfromid.PlafondFromId(id).surface() > tremi.surface()) {
+                            if(HelloApplication.ListPlafond.contains(Objfromid.PlafondFromId(id)) && Objfromid.PlafondFromId(id).surface() > tremi.surface()) {
                                 Objfromid.PlafondFromId(id).setTremi(tremi);
                                 System.out.println("La tremie a été ajoutée au plafond indiqué."); 
                             }

@@ -99,6 +99,12 @@ public class StartPageController implements Initializable {
                 if (ButtonImmeuble.isSelected()){
                     //créer un immeuble
                     HelloApplication.bâtiment = Immeuble.creerImmeuble( nomBatiment.getText(), nomClient.getText(), prenomClient.getText(), adresse.getText(), ville.getText(), postal.getText());
+                    //on lui attribue les informations du client
+                    HelloApplication.bâtiment.setNomClient(nomClient.getText());
+                    HelloApplication.bâtiment.setPrenomClient(prenomClient.getText());
+                    HelloApplication.bâtiment.setAdresse(adresse.getText());
+                    HelloApplication.bâtiment.setVille(ville.getText());
+                    HelloApplication.bâtiment.setPostal(postal.getText());
                     //on ouvre la fenêtre MainPage à l'aide de la méthode openMainPage
                     try{
                         openMainPage(actionEvent);
@@ -197,7 +203,11 @@ public class StartPageController implements Initializable {
                         e.printStackTrace();
                     }
                     //ouvrir le projet
-                    System.out.println(FilePath.getText());
+                    // Create an instance of the Importation class
+                    Importation importation = new Importation();
+                    // Call the importerConfigurations method and pass in the filepath
+                    importation.importerConfigurations(FilePath.getText());
+
 
                 }
             }
@@ -257,11 +267,6 @@ public class StartPageController implements Initializable {
         }
         stage.setResizable(true);
         stage.show();
-    }
-    public static void importerSauvegarde(String nom){
-        Importation importation = new Importation(Batiment.ListNiveau, Batiment.ListCoin, Batiment.ListMur, Batiment.ListPiece);
-        // Appel de la méthode d'importation des configurations
-        importation.importerConfigurations(nom);
     }
 
 }

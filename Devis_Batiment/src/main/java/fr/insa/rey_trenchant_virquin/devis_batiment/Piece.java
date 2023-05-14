@@ -75,7 +75,7 @@ public class Piece {
 
     public static Piece creerPieceDepuisMur(int I, int II, int III, int IV) {
 
-        System.out.println(Gestion.ListMur);
+        System.out.println(HelloApplication.ListMur);
         if(Verification.possiblePiece(I ,II, III, IV)){
             Mur [] mur = {Objfromid.MurFromId(I), Objfromid.MurFromId(II), Objfromid.MurFromId(III), Objfromid.MurFromId(IV)};
             //création d'un Set contenant les coins des murs
@@ -87,14 +87,14 @@ public class Piece {
             }
             Coin[] coin = SetCoin.toArray(new Coin[4]); //conversion du set en tableau
             idpiece++;
-            Piece p = new Piece (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu - 1), idpiece);
-            Sol sol = new Sol (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu - 1), idpiece, null, null);
-            Plafond plafond = new Plafond (mur, coin, Gestion.ListNiveau.get(Gestion.niv_actu - 1), idpiece, null, null);
-            Gestion.ListPiece.add(p);
-            Gestion.ListSol.add(sol);
-            Gestion.ListPlafond.add(plafond);
+            Piece p = new Piece (mur, coin, HelloApplication.ListNiveau.get(HelloApplication.niv_actu - 1), idpiece);
+            Sol sol = new Sol (mur, coin, HelloApplication.ListNiveau.get(HelloApplication.niv_actu - 1), idpiece, null, null);
+            Plafond plafond = new Plafond (mur, coin, HelloApplication.ListNiveau.get(HelloApplication.niv_actu - 1), idpiece, null, null);
+            HelloApplication.ListPiece.add(p);
+            HelloApplication.ListSol.add(sol);
+            HelloApplication.ListPlafond.add(plafond);
             //ajout de la piece dans la liste des pièces du niveau.
-            Gestion.ListNiveau.get(Gestion.niv_actu - 1).addPiece(p);
+            HelloApplication.ListNiveau.get(HelloApplication.niv_actu - 1).addPiece(p);
             //système de renommage automatique
             p.setNom("Piece " + p.getId());
             System.out.println(p);

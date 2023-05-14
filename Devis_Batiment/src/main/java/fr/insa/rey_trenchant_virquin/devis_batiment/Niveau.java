@@ -89,7 +89,7 @@ public class Niveau {
             double h = NewNiveauController.getHauteur();
             List<Piece> ListPieces = new ArrayList<>();
             Niveau niv = new Niveau(id_niv, ListPieces, h);
-            Gestion.ListNiveau.add(niv);
+            HelloApplication.ListNiveau.add(niv);
             System.out.println(niv);
             return niv;
         } else {

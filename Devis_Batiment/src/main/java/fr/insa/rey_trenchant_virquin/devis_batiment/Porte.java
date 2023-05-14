@@ -34,7 +34,7 @@ public class Porte extends Ouverture {
                 System.out.println("a quelle distance du coin debut voulez vous placer la porte ?");
                 double dist = Lire.i();
                 //TODO ajout de vérification
-                if(!Gestion.ListMur.contains(Objfromid.MurFromId(id))) {
+                if(!HelloApplication.ListMur.contains(Objfromid.MurFromId(id))) {
                     System.out.println("Le mur indiqué n'existe pas");
                 }
                 else{

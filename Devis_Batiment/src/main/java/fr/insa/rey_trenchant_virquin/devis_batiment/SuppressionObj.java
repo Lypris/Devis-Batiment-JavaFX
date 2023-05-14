@@ -14,35 +14,35 @@ public class SuppressionObj {
     public static void suppressionCoin (int Id){
         Coin c1 = Objfromid.CoinFromId(Id);
         
-        for (Mur m : Gestion.ListMur){
+        for (Mur m : HelloApplication.ListMur){
             if(m.getDebut()==c1 || m.getDebut()==c1){
                 suppressionMur(m.getId());
             }
         }
-        Gestion.ListCoin.remove(c1);
+        HelloApplication.ListCoin.remove(c1);
         c1 = null;
     }
 
     public static void suppressionMur (int Id){
         Mur m1 = Objfromid.MurFromId(Id);
-        for (Piece p : Gestion.ListPiece){
+        for (Piece p : HelloApplication.ListPiece){
             if(p.getMur()[0]==m1 || p.getMur()[1]==m1 || p.getMur()[2]==m1 || p.getMur()[3]==m1){
                 suppressionPiece(p.getId());
             }
         }
-        Gestion.ListMur.remove(m1);
+        HelloApplication.ListMur.remove(m1);
         m1 = null;
     }
     
     public static void suppressionPiece (int Id){
         Piece p1 = Objfromid.PieceFromId(Id);
-        Gestion.ListPiece.remove(p1);
+        HelloApplication.ListPiece.remove(p1);
         p1 = null;
         Sol s1 = Objfromid.SolFromId(Id);
-        Gestion.ListSol.remove(s1);
+        HelloApplication.ListSol.remove(s1);
         s1 = null;
         Plafond pl1 = Objfromid.PlafondFromId(Id);
-        Gestion.ListPlafond.remove(pl1);
+        HelloApplication.ListPlafond.remove(pl1);
         pl1 = null;
     }
     
@@ -62,7 +62,7 @@ public class SuppressionObj {
             case "c" -> {
                 System.out.println("Taper l'id de votre coin");
                 int id = Lire.i();
-                if(Gestion.ListPiece.contains(Objfromid.CoinFromId(id))){
+                if(HelloApplication.ListPiece.contains(Objfromid.CoinFromId(id))){
                     System.out.println("Ce coin est utilisé par une piece.");
                     System.out.println("Voulez-vous quand même supprimer le coin et la pièce associée ? (oui/non)");
                     String entre2 = Lire.S();
@@ -75,7 +75,7 @@ public class SuppressionObj {
                     else System.out.println("Entrée inconnue.");
 
                 }
-                else if (Gestion.ListMur.contains(Objfromid.CoinFromId(id))){
+                else if (HelloApplication.ListMur.contains(Objfromid.CoinFromId(id))){
                     System.out.println("Ce coin est utilisé par un mur.");
                     System.out.println("Voulez-vous quand même supprimer le coin et le mur associé ? (oui/non)");
                     String entre2 = Lire.S();
@@ -88,14 +88,14 @@ public class SuppressionObj {
 
                 }
 
-                else if (Gestion.ListCoin.contains(Objfromid.CoinFromId(id))) suppressionCoin(id);
+                else if (HelloApplication.ListCoin.contains(Objfromid.CoinFromId(id))) suppressionCoin(id);
                 else System.out.println("Ce coin n'existe pas");
             }
             case "m" -> {
                 System.out.println("Taper l'id de votre mur");
                 int id = Lire.i();
                 //vérifier que le mur ne fait pas partie d'une piece
-                if(Gestion.ListPiece.contains(Objfromid.MurFromId(id))){
+                if(HelloApplication.ListPiece.contains(Objfromid.MurFromId(id))){
                     System.out.println("Ce mur est utilisé par une piece.");
                     System.out.println("Voulez-vous quand même supprimer le mur et la pièce associée ? (oui/non)");
                     String entre2 = Lire.S();
@@ -106,13 +106,13 @@ public class SuppressionObj {
                     else if (entre2.equals("non")) break BouclePrincipale;
                     else System.out.println("Entrée inconnue.");
                 }
-                else if (Gestion.ListMur.contains(Objfromid.MurFromId(id))) suppressionMur(id);
+                else if (HelloApplication.ListMur.contains(Objfromid.MurFromId(id))) suppressionMur(id);
                 else System.out.println("Ce mur n'existe pas");
             }
             case "p" -> {
                 System.out.println("Taper l'id de votre piece");
                 int id = Lire.i();
-                if (Gestion.ListPiece.contains(Objfromid.PieceFromId(id))) suppressionPiece(id);
+                if (HelloApplication.ListPiece.contains(Objfromid.PieceFromId(id))) suppressionPiece(id);
                 else System.out.println("Cette piece n'existe pas");
             }
                 

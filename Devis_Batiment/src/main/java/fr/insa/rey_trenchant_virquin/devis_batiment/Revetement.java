@@ -192,17 +192,17 @@ public class Revetement {
     public static double calculPrixRevetement(Revetement r) {
         double prix = 0;
         //on parcourt les Listes de murs, sols et plafonds qui ont ce revêtement
-        for (Mur m : Gestion.ListMur){
+        for (Mur m : HelloApplication.ListMur){
             if (m.getR() == r){
                 prix += r.getPrix() * m.surface();
             }
         }
-        for (Sol s : Gestion.ListSol){
+        for (Sol s : HelloApplication.ListSol){
             if (s.getR() == r){
                 prix += r.getPrix() * s.surface();
             }
         }
-        for (Plafond p : Gestion.ListPlafond){
+        for (Plafond p : HelloApplication.ListPlafond){
             if (p.getR() == r){
                 prix += r.getPrix() * p.surface();
             }
@@ -214,17 +214,17 @@ public class Revetement {
     public static double calculSurfaceRevetement(Revetement r) {
         double surface = 0;
         //on parcourt les Listes de murs, sols et plafonds qui ont ce revêtement
-        for (Mur m : Gestion.ListMur){
+        for (Mur m : HelloApplication.ListMur){
             if (m.getR() == r){
                 surface += m.surface();
             }
         }
-        for (Sol s : Gestion.ListSol){
+        for (Sol s : HelloApplication.ListSol){
             if (s.getR() == r){
                 surface += s.surface();
             }
         }
-        for (Plafond p : Gestion.ListPlafond){
+        for (Plafond p : HelloApplication.ListPlafond){
             if (p.getR() == r){
                 surface += p.surface();
             }

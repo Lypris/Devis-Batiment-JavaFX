@@ -1,6 +1,6 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
-import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,9 +39,9 @@ public class NewNiveauController implements Initializable {
             // Si l'utilisateur annule la création du niveau, on supprime le tab
             tabPane.getTabs().remove(tabPane.getTabs().size()-1);
             //Si l'utilisateur annule la création du niveau, on supprime le niveau
-            Gestion.ListNiveau.remove(Gestion.ListNiveau.size()-1);
+            HelloApplication.ListNiveau.remove(HelloApplication.ListNiveau.size()-1);
             //Si l'utilisateur annule la modification de la hauteur, on remet l'ancienne hauteur
-            Gestion.ListNiveau.get(Gestion.ListNiveau.size()-1).setH(Gestion.ListNiveau.get(Gestion.ListNiveau.size()-1).getH());
+            HelloApplication.ListNiveau.get(HelloApplication.ListNiveau.size()-1).setH(HelloApplication.ListNiveau.get(HelloApplication.ListNiveau.size()-1).getH());
         });
     }
 
