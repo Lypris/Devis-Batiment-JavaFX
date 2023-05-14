@@ -18,6 +18,20 @@ public class TabNavigation {
     public TabPane tabPane;
 
     public void initialize() throws IOException {
+        //TODO: gérer le cas où on lance un projet existant
+
+        // on regarde si il y a déjà des niveaux dans le projet
+        // si oui on créer un onglet par niveau
+        if (!HelloApplication.ListNiveau.isEmpty()){
+
+            // on dessine tous les niveaux du projet
+            for (Niveau niv : HelloApplication.ListNiveau){
+                DessinCanvas.redrawAll(niv);
+            }
+        }
+
+
+
         // Ajoute un onglet par défaut avec un niveau correspondant
         Niveau defaultNiveau = new Niveau(1, 2.5);
         HelloApplication.ListNiveau.add(defaultNiveau);

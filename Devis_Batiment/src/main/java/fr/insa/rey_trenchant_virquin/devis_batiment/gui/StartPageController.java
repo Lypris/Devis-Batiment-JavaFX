@@ -197,16 +197,17 @@ public class StartPageController implements Initializable {
                 checkFile(actionEvent);
                 //ouvrir le MainPage si le fichier est valide
                 if(!ButtonFinish.isDisable()){
-                    try {
-                        openMainPage(actionEvent);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     //ouvrir le projet
                     // Create an instance of the Importation class
                     Importation importation = new Importation();
                     // Call the importerConfigurations method and pass in the filepath
                     importation.importerConfigurations(FilePath.getText());
+                    try {
+                        openMainPage(actionEvent);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
 
 
                 }
