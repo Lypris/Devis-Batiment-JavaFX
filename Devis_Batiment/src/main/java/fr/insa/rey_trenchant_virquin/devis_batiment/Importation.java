@@ -19,19 +19,10 @@ import java.util.List;
 import java.util.Set;
 
 public class Importation {
-    
-    private List<Coin> ListCoin;
-    private List<Mur> ListMur;
-    private List<Piece> ListPiece;
-    private List<Niveau> ListNiveau;
 
-    public Importation(List<Niveau> ListNiveau, List<Coin> ListCoin, List<Mur> ListMur, List<Piece> ListPiece) {
-        this.ListCoin = ListCoin;
-        this.ListMur = ListMur;
-        this.ListPiece = ListPiece;
-        this.ListNiveau = ListNiveau;
+    public Importation() {
     }
-    
+
     public void importerConfigurations(String nomFichier) {
         try {
             BufferedReader b = new BufferedReader(new FileReader(nomFichier));
@@ -39,13 +30,38 @@ public class Importation {
             while ((ligne = b.readLine()) != null) {
                 try {
                     switch (ligne) {
+                        case "<Infos>" -> {
+                            //lecture des informations du bâtiment et du client
+
+                            String type = b.readLine().substring(1).split("\\) : \\(")[0];
+                            String nom = b.readLine().substring(1).split("\\) : \\(")[1].replace(")", "");
+                            String nomClient = b.readLine().substring("Client: ".length()).split(" ")[0];
+                            String prenomClient = b.readLine().substring("Client: ".length()).split(" ")[1];
+                            String adresse = b.readLine();
+                            String ville = b.readLine().split(" ")[1];
+                            String postal = b.readLine().split(" ")[2];
+
+                            //création du bâtiment en fonction de son type
+                            if (type.equals("Maison")) {
+                                HelloApplication.bâtiment = new Maison(1, nom, null, null);
+                            } else if (type.equals("Immeuble")) {
+                                HelloApplication.bâtiment = new Immeuble(1, nom, null, null, null);
+                            }
+                            //ajout des informations du client
+                            HelloApplication.bâtiment.setNomClient(nomClient);
+                            HelloApplication.bâtiment.setPrenomClient(prenomClient);
+                            HelloApplication.bâtiment.setAdresse(adresse);
+                            HelloApplication.bâtiment.setVille(ville);
+                            HelloApplication.bâtiment.setPostal(postal);
+
+                        }
                         case "<Niveaux>" -> {
                             //lecture et création des niveaux
                             while ((ligne = b.readLine()) != null && !ligne.equals("</Niveaux>")) {
                                 String[] valeurs = ligne.split(";");
                                 int id = Integer.parseInt(valeurs[0]);
                                 double h = Double.parseDouble(valeurs[1]);
-                                Gestion.ListNiveau.add(new Niveau(id, h));
+                                HelloApplication.ListNiveau.add(new Niveau(id, h));
                             }
                         }
                         case "<Coins>" -> {
@@ -56,7 +72,7 @@ public class Importation {
                                 double y = Double.parseDouble(valeurs[1]);
                                 int id = Integer.parseInt(valeurs[2]);
                                 int idNiveau = Integer.parseInt(valeurs[3]);
-                                Gestion.ListCoin.add(new Coin(x, y, Objfromid.NiveauFromId(idNiveau), id));
+                                HelloApplication.ListCoin.add(new Coin(x, y, Objfromid.NiveauFromId(idNiveau), id));
                             }
                         }
                         case "<Murs>" -> {
@@ -106,7 +122,7 @@ public class Importation {
                                     R = Revetement.RevetementfromNom(revetement);
                                     mur.setR(R);
                                 }
-                                Gestion.ListMur.add(mur);
+                                HelloApplication.ListMur.add(mur);
                             }
                         }
                         case "<Pièces>" -> {
@@ -119,33 +135,32 @@ public class Importation {
                                 int idMur4 = Integer.parseInt(valeurs[4]);
                                 int idNiveau = Integer.parseInt(valeurs[5]);
                                 //on récupère les murs à partir de leur id
-                                Mur [] mur = {Objfromid.MurFromId(idMur1), Objfromid.MurFromId(idMur2), Objfromid.MurFromId(idMur3), Objfromid.MurFromId(idMur4)};
+                                Mur[] mur = {Objfromid.MurFromId(idMur1), Objfromid.MurFromId(idMur2), Objfromid.MurFromId(idMur3), Objfromid.MurFromId(idMur4)};
                                 //création d'un Set contenant les coins des murs
                                 Set<Coin> SetCoin = new HashSet<>();
                                 SetCoin.clear();
-                                for(int i=0; i<4; i++){
+                                for (int i = 0; i < 4; i++) {
                                     SetCoin.add(mur[i].getDebut());
                                     SetCoin.add(mur[i].getFin());
                                 }
                                 Coin[] coin = SetCoin.toArray(new Coin[4]); //conversion du set en tableau
                                 Piece piece = new Piece(mur, coin, Objfromid.NiveauFromId(idNiveau), id);
-                                Gestion.ListPiece.add(piece);
+                                HelloApplication.ListPiece.add(piece);
                             }
                         }
                         default -> {
-                            System.err.println("Unknown balise: " + ligne);
                         }
                     }
                 } catch (IOException e) {
                     System.err.println("Error reading input: " + e.getMessage());
-                } catch (NumberFormatException e) {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     System.err.println("Error parsing input: " + e.getMessage());
                 } catch (Exception e) {
                     System.err.println("Unknown error: " + e.getMessage());
                 }
             }
             b.close();
-            System.out.println("Fichier " + nomFichier + ".txt importé avec succès !");
+            System.out.println("Fichier " + nomFichier + " importé avec succès !");
         } catch (IOException e) {
             System.out.println("Erreur lors de l'importation.");
         }

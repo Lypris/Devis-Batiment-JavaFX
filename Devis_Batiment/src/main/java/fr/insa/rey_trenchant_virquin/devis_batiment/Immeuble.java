@@ -3,6 +3,8 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class Immeuble extends Batiment {
     public static Immeuble creerImmeuble(String nom_immeuble, String nom_personne, String prenom_personne, String adresse, String code_postale, String ville){
         //pour générer le devis, on demande les coordonnées de la personne dans StartPageController
         id_immeuble++;
-        Immeuble immeuble = new Immeuble(id_immeuble, nom_immeuble, null, null, null);
+        Immeuble immeuble = new Immeuble(id_immeuble, nom_immeuble, HelloApplication.ListNiveau, HelloApplication.ListAppartement, HelloApplication.toit);
         System.out.println(immeuble); //à supprimer
         return immeuble;
     }

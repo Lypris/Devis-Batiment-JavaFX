@@ -15,12 +15,12 @@ public class Verification {
         // cette methode vérifie que les coins debut et fin sont en capacité de créer un mur
         
         // les coins existe
-        if(!Gestion.ListCoin.contains(debut) || !Gestion.ListCoin.contains(fin)){
+        if(!HelloApplication.ListCoin.contains(debut) || !HelloApplication.ListCoin.contains(fin)){
             System.out.println("Les coins n'existent pas");
             return false;
         }
         // les coins appartiennent au meme niveau
-        if(debut.getNiv() != Objfromid.NiveauFromId(Gestion.niv_actu) || fin.getNiv() != Objfromid.NiveauFromId(Gestion.niv_actu)){
+        if(debut.getNiv() != Objfromid.NiveauFromId(HelloApplication.niv_actu) || fin.getNiv() != Objfromid.NiveauFromId(HelloApplication.niv_actu)){
             System.out.println("Les coins n'appartiennent pas au même niveau");
             return false;
         }
@@ -35,14 +35,14 @@ public class Verification {
             return false;
         }
         // les coins ne constituent pas déjà le même mur
-        for (Mur m : Gestion.ListMur){
+        for (Mur m : HelloApplication.ListMur){
             if (m.getDebut()==debut && m.getFin()==fin || m.getDebut()==fin && m.getFin()==debut){
                 System.out.println("Les coins constituent déjà le même mur");
                 return false;
             }
         }
         // Empêcher deux murs de se superposer (version RUDY)
-        for (fr.insa.rey_trenchant_virquin.devis_batiment.Mur m : fr.insa.rey_trenchant_virquin.devis_batiment.Gestion.ListMur){
+        for (Mur m : HelloApplication.ListMur){
             if (m.getDebut().getX() == m.getFin().getX() && debut.getX() == fin.getX()){ // si les deux murs sont verticaux
                 if (m.getDebut().getX() == debut.getX() && debut.getNiv()==m.getNiv()){ // si les deux murs sont sur la même colonne et sur le même niveau
                     if (m.getDebut().getY() < debut.getY() && m.getFin().getY() > fin.getY() || m.getDebut().getY() > debut.getY() && m.getFin().getY() < fin.getY()){ // si les deux murs se croisent
@@ -61,7 +61,7 @@ public class Verification {
             }
         }
         //// Empêcher deux murs de se traverser/couper perpendiculairement (version Evan)
-        for (Mur m : Gestion.ListMur){
+        for (Mur m : HelloApplication.ListMur){
             // si le  mur(m) est verticale et celui en construction horizontale.
             if (m.getDebut().getX() == m.getFin().getX() && debut.getY() == fin.getY()){ 
                 // si un coin du mur(m) est au-dessus du mur construit et l'autre coin en dessous.(les murs ont une chance de se croiser)
@@ -102,7 +102,7 @@ public class Verification {
         Mur[3]=Objfromid.MurFromId(IV);
         
         // vérification de l'existence et de l'appartenance au même niveau
-        if(!Gestion.ListMur.contains(Mur[0]) || !Gestion.ListMur.contains(Mur[1]) || !Gestion.ListMur.contains(Mur[2]) || !Gestion.ListMur.contains(Mur[3])){
+        if(!HelloApplication.ListMur.contains(Mur[0]) || !HelloApplication.ListMur.contains(Mur[1]) || !HelloApplication.ListMur.contains(Mur[2]) || !HelloApplication.ListMur.contains(Mur[3])){
             System.out.println("Les murs sélectionnés n'existent pas.");
             return false;
         }
@@ -123,7 +123,7 @@ public class Verification {
             return false;
         }
         //vérification que les murs ne constituent pas déjà une pièce
-        for (Piece p : Gestion.ListPiece){
+        for (Piece p : HelloApplication.ListPiece){
             int compt=0;
             for(i=0; i<4; i++){
                 if (p.getMur()[i]==Mur[i]){
@@ -136,7 +136,7 @@ public class Verification {
             }
         }
         //vérification que la pièce n'est pas à l'intérieur d'une autre pièce (si un coin se trouve déjà dans une pièce)
-        for (Piece p : Gestion.ListPiece){
+        for (Piece p : HelloApplication.ListPiece){
             //on prend les 4 coins de la pièce p
             Coin[] coin_p = p.getCoin();
             //on regarde si l'abscisse de la pièce en création est comprise entre les abscisses des coins de la pièce p
@@ -157,7 +157,7 @@ public class Verification {
         
         Piece p = Objfromid.PieceFromId(id);
         // la piece existe
-        if(!Gestion.ListPiece.contains(p)) return false;
+        if(!HelloApplication.ListPiece.contains(p)) return false;
         // n'appartiens pas déjà un autre appart si le bâtiment créer est un immeuble
         if(HelloApplication.bâtiment instanceof Immeuble){
             Immeuble immeuble = (Immeuble) HelloApplication.bâtiment;
@@ -174,17 +174,17 @@ public class Verification {
 
     //vérification que tous les murs, sols et plafonds aient des revêtements, si ce n'est pas le cas, on renvoit faux
     public static boolean possibleDevis(){
-        for(Mur m : Gestion.ListMur){
+        for(Mur m : HelloApplication.ListMur){
             if(m.getR()==null){
                 return false;
             }
         }
-        for(Sol s : Gestion.ListSol){
+        for(Sol s : HelloApplication.ListSol){
             if(s.getR()==null){
                 return false;
             }
         }
-        for(Plafond p : Gestion.ListPlafond){
+        for(Plafond p : HelloApplication.ListPlafond){
             if(p.getR()==null){
                 return false;
             }

@@ -15,25 +15,31 @@ import java.io.IOException;
  */
 public class Enregistrement {
 
-    public Enregistrement(Batiment batiment) {
-
+    public Enregistrement() {
     }
-    
-    
-    public static void enregistrerConfigurations(String nomFichier, String cheminFichier) {
+
+
+    public void enregistrerConfigurations(String nomFichier, String chemin) {
         try {
-            //on crée un fichier de sauvegarde dans le chemin spécifié par l'utilisateur et au nom spécifié par l'utilisateur
-            BufferedWriter b = new BufferedWriter(new FileWriter(cheminFichier + "\\" + nomFichier, true));
+            BufferedWriter b = new BufferedWriter(new FileWriter(chemin + "/" + nomFichier, true));
             b.write("Ceci est un fichier de sauvegarde de la configuration du bâtiment:");
             b.newLine();
-            b.write(HelloApplication.bâtiment.getNom());
+            b.write("<Infos>");
+            b.newLine();
+            b.write("(" + HelloApplication.bâtiment.getType() + ") : (" + HelloApplication.bâtiment.getNom() + ")");
+            b.newLine();
+            b.write("Client: " + HelloApplication.bâtiment.getNomClient() + " " + HelloApplication.bâtiment.getPrenomClient());
+            b.newLine();
+            b.write(HelloApplication.bâtiment.getAdresse() + " " + HelloApplication.bâtiment.getVille() + " " + HelloApplication.bâtiment.getPostal());
+            b.newLine();
+            b.write("</Infos>");
             b.newLine();
             //enregistrement de tous les niveaux
             b.write("Format d'écriture pour un niveau: id;hauteur");
             b.newLine();
             b.write("<Niveaux>");
             b.newLine();
-            for (Niveau n : Gestion.ListNiveau) {
+            for (Niveau n : HelloApplication.ListNiveau) {
                 b.write(n.getId() + ";" + n.getH());
                 b.newLine();
             }
@@ -44,7 +50,7 @@ public class Enregistrement {
             b.newLine();
             b.write("<Coins>");
             b.newLine();
-            for (Coin c : Gestion.ListCoin) {
+            for (Coin c : HelloApplication.ListCoin) {
                 b.write(c.getX() + ";" + c.getY() + ";" + c.getId() + ";" + c.getNiv().getId());
                 b.newLine();
             }
@@ -57,7 +63,7 @@ public class Enregistrement {
             b.newLine();
             b.write("<Murs>");
             b.newLine();
-            for (Mur m : Gestion.ListMur) {
+            for (Mur m : HelloApplication.ListMur) {
                 if (m.getR() != null) { //si le mur a un revêtement, on l'enregistre
                     String nomRevetement = m.getR().getNom();
                      b.write(m.getId() + ";" + m.getDebut().getId() + ";" + m.getFin().getId() + ";" + m.getNiv().getId() + ";" + nomRevetement);
@@ -82,6 +88,7 @@ public class Enregistrement {
                 }
                 b.newLine();
                 b.write("</Portes>");
+                b.newLine();
             }
             b.newLine();
             b.write("</Murs>");
@@ -91,11 +98,10 @@ public class Enregistrement {
             b.newLine();
             b.write("<Pièces>");
             b.newLine();
-            for (Piece p: Gestion.ListPiece) {
+            for (Piece p: HelloApplication.ListPiece) {
                 b.newLine();
                 b.write(p.getId() + ";" + p.getMur()[0].getId() + ";" + p.getMur()[1].getId() + ";" + p.getMur()[2].getId() + ";" + p.getMur()[3].getId() + ";" + p.getN().getId());
             }
-            b.newLine();
             b.write("</Pièces>");
             b.newLine();
             //enregistrement de tous les sols et plafonds de pièces
@@ -104,20 +110,19 @@ public class Enregistrement {
             b.write("<Sol>");
             b.newLine();
             //enregistrement de tous les sols si la liste n'est pas vide
-            if (!Gestion.ListSol.isEmpty()) {
-                for (Sol s: Batiment.ListSol) {
+            if (!HelloApplication.ListSol.isEmpty()) {
+                for (Sol s: HelloApplication.ListSol) {
                     b.write(s.getId() + ";" + s.getN().getId() + ";" + s.getR().getNom());
                     b.newLine();
                 }
             }
-            b.newLine();
             b.write("<Sol>");
             b.newLine();
             b.write("<Plafond>");
             b.newLine();
             //enregistrement de tous les plafonds si la liste n'est pas vide
-            if (!Gestion.ListPlafond.isEmpty()) {
-                for (Plafond p: Batiment.ListPlafond) {
+            if (!HelloApplication.ListPlafond.isEmpty()) {
+                for (Plafond p: HelloApplication.ListPlafond) {
                     b.write(p.getId() + ";" + p.getN().getId() + ";" + p.getR().getNom());
                     b.newLine();
                 }

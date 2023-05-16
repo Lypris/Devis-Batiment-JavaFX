@@ -53,8 +53,8 @@ public class Coin {
     public static Coin creerCoin(double x, double y){
         boolean doublons = false;
         //vérifie si le coin existe déjà dans ce niveau
-        for (Coin c : Gestion.ListCoin){
-            if (c.getX()==x && c.getY()==y && c.getNiv()==NiveauFromId(Gestion.niv_actu)){
+        for (Coin c : HelloApplication.ListCoin){
+            if (c.getX()==x && c.getY()==y && c.getNiv()==NiveauFromId(HelloApplication.niv_actu)){
                 doublons=true;
                 break;
             }
@@ -64,8 +64,8 @@ public class Coin {
             return null;
         }else{
             idcoin++;
-            Coin c = new Coin(x,y, NiveauFromId(Gestion.niv_actu),idcoin);
-            Gestion.ListCoin.add(c);
+            Coin c = new Coin(x,y, NiveauFromId(HelloApplication.niv_actu),idcoin);
+            HelloApplication.ListCoin.add(c);
             System.out.println(c);
             return c;
         }

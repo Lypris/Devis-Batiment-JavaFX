@@ -1,6 +1,6 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
-import fr.insa.rey_trenchant_virquin.devis_batiment.Batiment;
+import fr.insa.rey_trenchant_virquin.devis_batiment.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -8,10 +8,21 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HelloApplication extends Application {
     public static Batiment bâtiment;
+    public static Toit toit;
+    public static List<Appartement> ListAppartement = new ArrayList<>();
+    public static List<Niveau> ListNiveau = new ArrayList<>();
+    public static List<Coin> ListCoin = new ArrayList<>();
+    public static List<Mur> ListMur = new ArrayList<>();
+    public static List<Piece> ListPiece = new ArrayList<>();
+    public static List<Sol> ListSol = new ArrayList<>();
+    public static List<Plafond> ListPlafond = new ArrayList<>();
+    public static int niv_actu=1; //id du niveau sur lequel on travaille
     @Override
     public void start(Stage stage) {
         try {

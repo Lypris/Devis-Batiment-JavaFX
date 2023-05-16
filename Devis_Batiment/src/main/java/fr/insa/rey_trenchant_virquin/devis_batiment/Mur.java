@@ -111,8 +111,8 @@ public class Mur {
             idm++;
             List<Porte> ListPorte = new ArrayList<>();
             List<Fenetre> ListFenetre = new ArrayList<>();
-            Mur m = new Mur(c1, c2, Objfromid.NiveauFromId(Gestion.niv_actu), ListPorte, ListFenetre, idm, null);
-            Gestion.ListMur.add(m);
+            Mur m = new Mur(c1, c2, Objfromid.NiveauFromId(HelloApplication.niv_actu), ListPorte, ListFenetre, idm, null);
+            HelloApplication.ListMur.add(m);
             System.out.println(m);
             return m;
         }else{
@@ -123,7 +123,7 @@ public class Mur {
     
     public static void ajoutPorte(int id){ // permet d'ajouter une porte dans un mur si on crée une porte dans un autre mur
         
-        for (Mur m : Gestion.ListMur){
+        for (Mur m : HelloApplication.ListMur){
             if (m.getDebut().getX() == m.getFin().getX()){ // si le mur m est vertical
                 // si le mur de l'id ouverture est vertical
                 if(Objfromid.MurFromPorteId(id).getDebut().getX() == Objfromid.MurFromPorteId(id).getFin().getX()){

@@ -32,7 +32,7 @@ public class Fenetre extends Ouverture {
                 Fenetre fenetre = new Fenetre(h2, l2, idfenetre);
                 System.out.println("Dans quel mur voulez vous ajouter cette fenêtre ?");
                 int id = Lire.i();
-                if(Gestion.ListMur.contains(Objfromid.MurFromId(id)) && Objfromid.MurFromId(id).surface() > fenetre.surface() && Objfromid.MurFromId(id).getNiv().getH() > h2 && Objfromid.MurFromId(id).longueur() > l2) {
+                if(HelloApplication.ListMur.contains(Objfromid.MurFromId(id)) && Objfromid.MurFromId(id).surface() > fenetre.surface() && Objfromid.MurFromId(id).getNiv().getH() > h2 && Objfromid.MurFromId(id).longueur() > l2) {
                     //on demande les coordonnées de la fenêtre par rapport aux coins du mur
                     System.out.println("Donnez la distance entre le coin gauche du mur et le coin gauche de la fenêtre:");
                     double x = Lire.d();

@@ -57,7 +57,7 @@ public class DessinCanvas extends Canvas {
             scale.setY(zoomLevel);
             translate.setX(translate.getX() - dx);
             translate.setY(translate.getY() - dy);
-            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
+            redrawAll(Objfromid.NiveauFromId(HelloApplication.niv_actu));
             event.consume();
         });
 
@@ -65,7 +65,7 @@ public class DessinCanvas extends Canvas {
         addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             translate.setX(translate.getX() + event.getX() - getWidth() / 2);
             translate.setY(translate.getY() + event.getY() - getHeight() / 2);
-            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
+            redrawAll(Objfromid.NiveauFromId(HelloApplication.niv_actu));
             event.consume();
         });
 
@@ -82,9 +82,9 @@ public class DessinCanvas extends Canvas {
                 // Get the clicked corner
                 //à supprimer
                 //affichage de contrôle dans la console: on affiche tous les coins de ce niveau
-                System.out.println("Coins du niveau " + Gestion.niv_actu + " :");
-                for (Coin c : Gestion.ListCoin){
-                    if (c.getNiv()==NiveauFromId(Gestion.niv_actu)) {
+                System.out.println("Coins du niveau " + HelloApplication.niv_actu + " :");
+                for (Coin c : HelloApplication.ListCoin){
+                    if (c.getNiv()==NiveauFromId(HelloApplication.niv_actu)) {
                         System.out.println(c);
                     }
                 }
@@ -110,7 +110,7 @@ public class DessinCanvas extends Canvas {
                                 System.out.println("Erreur : mur non créé");
                             }
                             selectedCorners.clear();
-                            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
+                            redrawAll(Objfromid.NiveauFromId(HelloApplication.niv_actu));
                         }
                     }
                 }
@@ -142,7 +142,7 @@ public class DessinCanvas extends Canvas {
                             }
                             selectedMurs.clear();
                             // On redessine tout
-                            redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
+                            redrawAll(Objfromid.NiveauFromId(HelloApplication.niv_actu));
                             System.out.println("Pièce créée");
                         }
                     }
@@ -162,8 +162,8 @@ public class DessinCanvas extends Canvas {
     // Méthode qui renvoie le coin cliqué ou null si aucun coin n'est cliqué
     private Coin getClickedCorner(MouseEvent event) {
         double clickRadius = 5.0 / zoomLevel;
-        for (Coin corner : Gestion.ListCoin) {
-            if (corner.getNiv()==NiveauFromId(Gestion.niv_actu)) {
+        for (Coin corner : HelloApplication.ListCoin) {
+            if (corner.getNiv()==NiveauFromId(HelloApplication.niv_actu)) {
                 double x = corner.getX() * zoomLevel + translate.getX();
                 double y = corner.getY() * zoomLevel + translate.getY();
                 double distance = Math.sqrt(Math.pow(x - event.getX(), 2) + Math.pow(y - event.getY(), 2));
@@ -177,8 +177,8 @@ public class DessinCanvas extends Canvas {
     //Méthode qui renvoie le mur cliqué ou null si aucun mur n'est cliqué
     public Mur getSelectedWall(MouseEvent event) {
         double clickRadius = 10.0 / zoomLevel; // Increase the click radius to 10 pixels
-        for (Mur mur : Gestion.ListMur) {
-            if(mur.getNiv() == NiveauFromId(Gestion.niv_actu)) {
+        for (Mur mur : HelloApplication.ListMur) {
+            if(mur.getNiv() == NiveauFromId(HelloApplication.niv_actu)) {
                 double x1 = mur.getDebut().getX() * zoomLevel + translate.getX();
                 double y1 = mur.getDebut().getY() * zoomLevel + translate.getY();
                 double x2 = mur.getFin().getX() * zoomLevel + translate.getX();
@@ -272,17 +272,17 @@ public class DessinCanvas extends Canvas {
     //méthode pour tout redessiner sur un niveau
     public void redrawAll(Niveau niv) {
         drawGrid();
-        for (Coin c : Gestion.ListCoin) {
+        for (Coin c : HelloApplication.ListCoin) {
             if (c.getNiv() == niv){
                 dessineCoin(c);
             }
         }
-        for (Mur m : Gestion.ListMur) {
+        for (Mur m : HelloApplication.ListMur) {
             if(m.getNiv() == niv){
                 dessineMur(m);
             }
         }
-        for(Piece p : Gestion.ListPiece){
+        for(Piece p : HelloApplication.ListPiece){
             if(p.getN() == niv){
                 dessinePiece(p);
             }

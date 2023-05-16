@@ -3,6 +3,8 @@ package fr.insa.rey_trenchant_virquin.devis_batiment;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
+
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ public class Maison extends Batiment {
     public static Maison creerMaison(String nom_maison, String nom_personne, String prenom_personne, String adresse, String code_postale, String ville) {
         //pour générer le devis, on demande les coordonnées de la personne puis on ajoute ces informations à l'objet instancié précédemment
         id_maison++;
-        Maison maison = new Maison(id_maison, nom_maison, null, null);
+        Maison maison = new Maison(id_maison, nom_maison, HelloApplication.ListNiveau, HelloApplication.toit);
         System.out.println(maison); //à supprimer
         return maison;
     }
