@@ -3,6 +3,7 @@ package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.Niveau;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -40,9 +41,11 @@ public class TabNavigation {
                 newTab.setContent(newPane);
                 //on définit le niveau du tab
                 newTab.setUserData(niveau);
-                //on dessine la grille
-                newCanvas.drawGrid();
-                newCanvas.redrawAll(niveau);
+                //on dessine la grille et le contenu des niveaux
+                Platform.runLater(() -> {
+                    newCanvas.drawGrid();
+                    newCanvas.redrawAll(niveau);
+                });
                 //on ajoute le tab au tabPane
                 tabPane.getTabs().add(newTab);
             }
@@ -138,7 +141,6 @@ public class TabNavigation {
                 if (!pane.getChildren().isEmpty()) { // Check if the list is not empty
                     Node node = pane.getChildren().get(0);
                     if (node instanceof DessinCanvas) {
-                        //TODO : récupérer les données du niveau et les passer en paramètre de redrawAll
                         int id = ((Niveau) newValue.getUserData()).getId();
                         ((DessinCanvas) node).redrawAll(Objfromid.NiveauFromId(id));
                         ((DessinCanvas) node).setWidth(tabPane.getWidth());
