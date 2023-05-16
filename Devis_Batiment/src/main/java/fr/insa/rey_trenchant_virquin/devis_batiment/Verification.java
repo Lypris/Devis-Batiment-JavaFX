@@ -44,7 +44,7 @@ public class Verification {
         // Empêcher deux murs de se superposer (version RUDY)
         for (fr.insa.rey_trenchant_virquin.devis_batiment.Mur m : fr.insa.rey_trenchant_virquin.devis_batiment.Gestion.ListMur){
             if (m.getDebut().getX() == m.getFin().getX() && debut.getX() == fin.getX()){ // si les deux murs sont verticaux
-                if (m.getDebut().getX() == debut.getX()){ // si les deux murs sont sur la même colonne
+                if (m.getDebut().getX() == debut.getX() && debut.getNiv()==m.getNiv()){ // si les deux murs sont sur la même colonne et sur le même niveau
                     if (m.getDebut().getY() < debut.getY() && m.getFin().getY() > fin.getY() || m.getDebut().getY() > debut.getY() && m.getFin().getY() < fin.getY()){ // si les deux murs se croisent
                         System.out.println("Les murs se superposent");
                         return false;
@@ -52,7 +52,7 @@ public class Verification {
                 }
             }
             if (m.getDebut().getY() == m.getFin().getY() && debut.getY() == fin.getY()){ // si les deux murs sont horizontaux
-                if (m.getDebut().getY() == debut.getY()){ // si les deux murs sont sur la même ligne
+                if (m.getDebut().getY() == debut.getY() && debut.getNiv()==m.getNiv()){ // si les deux murs sont sur la même ligne et sur le même niveau
                     if (m.getDebut().getX() < debut.getX() && m.getFin().getX() > fin.getX() || m.getDebut().getX() > debut.getX() && m.getFin().getX() < fin.getX()){ // si les deux murs se croisent
                         System.out.println("Les murs se superposent");
                         return false;

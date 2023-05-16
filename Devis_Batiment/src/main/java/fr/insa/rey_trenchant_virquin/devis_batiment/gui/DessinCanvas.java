@@ -80,7 +80,7 @@ public class DessinCanvas extends Canvas {
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (MainPageController.create_mur) {
                 // Get the clicked corner
-                //TODO: à supprimer
+                //à supprimer
                 //affichage de contrôle dans la console: on affiche tous les coins de ce niveau
                 System.out.println("Coins du niveau " + Gestion.niv_actu + " :");
                 for (Coin c : Gestion.ListCoin){

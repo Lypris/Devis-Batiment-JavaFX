@@ -20,40 +20,63 @@ public class TabNavigation {
     public TabPane tabPane;
 
     public void initialize() throws IOException {
-        // Ajoute un onglet par défaut avec un niveau correspondant
-        Niveau defaultNiveau = new Niveau(1, 2.5);
-        Gestion.ListNiveau.add(defaultNiveau);
-        System.out.println(Gestion.ListNiveau);
-        Tab defaultTab = new Tab("Niveau 1");
-        DessinCanvas defaultCanvas = new DessinCanvas(0, 0);
-        defaultCanvas.setWidth(tabPane.getWidth());
-        defaultCanvas.setHeight(tabPane.getHeight());
-        Pane defaultPane = new Pane(defaultCanvas);
-        defaultTab.setContent(defaultPane);
-        defaultTab.setUserData(defaultNiveau);
-        defaultCanvas.drawGrid();
-        tabPane.getTabs().add(0, defaultTab);
-        tabPane.getSelectionModel().select(defaultTab);
-        // Add a context menu to each tab for right-click events
+        //on distingue 2 cas: l'ouverture d'un fichier et la création d'un nouveau fichier
+
+        //si on ouvre un fichier
+        if(StartPageController.project_open == true){
+            //on récupère la liste des niveaux
+            List<Niveau> listNiveau = Gestion.ListNiveau;
+            //on parcourt la liste des niveaux
+            for (Niveau niveau : listNiveau) {
+                //on crée un nouveau tab
+                Tab newTab = new Tab("Niveau " + listNiveau.indexOf(niveau) + 1);
+                //on crée un nouveau canvas
+                DessinCanvas newCanvas = new DessinCanvas(0, 0);
+                //on définit la taille du canvas
+                newCanvas.setWidth(tabPane.getWidth());
+                newCanvas.setHeight(tabPane.getHeight());
+                //on crée un nouveau pane
+                Pane newPane = new Pane(newCanvas);
+                //on définit le contenu du tab
+                newTab.setContent(newPane);
+                //on définit le niveau du tab
+                newTab.setUserData(niveau);
+                //on dessine la grille
+                newCanvas.drawGrid();
+                newCanvas.redrawAll(niveau);
+                //on ajoute le tab au tabPane
+                tabPane.getTabs().add(newTab);
+            }
+        }
+        else {
+            // Ajoute un onglet par défaut avec un niveau correspondant
+            Niveau defaultNiveau = new Niveau(1, 2.5);
+            Gestion.ListNiveau.add(defaultNiveau);
+            System.out.println(Gestion.ListNiveau);
+            Tab defaultTab = new Tab("Niveau 1");
+            DessinCanvas defaultCanvas = new DessinCanvas(0, 0);
+            defaultCanvas.setWidth(tabPane.getWidth());
+            defaultCanvas.setHeight(tabPane.getHeight());
+            Pane defaultPane = new Pane(defaultCanvas);
+            defaultTab.setContent(defaultPane);
+            defaultTab.setUserData(defaultNiveau);
+            defaultCanvas.drawGrid();
+            tabPane.getTabs().add(0, defaultTab);
+        }
+        //Dans tous les cas, on ajoute un contextMenu à tous les tabs déjà existants
         ContextMenu contextMenu = new ContextMenu();
         MenuItem changeHeightMenuItem = new MenuItem("Changer la hauteur du niveau");
-        changeHeightMenuItem.setOnAction(e -> {
-            // Appel de la méthode pour changer la hauteur du niveau
-            changeLevelHeight();
-        });
         contextMenu.getItems().add(changeHeightMenuItem);
-
         for (Tab tab : tabPane.getTabs()) {
             tab.setContextMenu(contextMenu);
         }
+        //On sélectionne le premier tab
+        tabPane.getSelectionModel().select(0);
 
-        // Redraw the grid when the default tab is shown
-        defaultTab.setOnSelectionChanged(event -> {
-            if (defaultTab.isSelected()) {
-                defaultCanvas.setWidth(tabPane.getWidth());
-                defaultCanvas.setHeight(tabPane.getHeight());
-                defaultCanvas.redrawAll(Objfromid.NiveauFromId(Gestion.niv_actu));
-            }
+        // Ajoute un événement de sélection sur la sélection du menu contextuel
+        changeHeightMenuItem.setOnAction(e -> {
+            // Appel de la méthode pour changer la hauteur du niveau
+            changeLevelHeight();
         });
 
         // Ajoute un événement de sélection sur le Tab "+"

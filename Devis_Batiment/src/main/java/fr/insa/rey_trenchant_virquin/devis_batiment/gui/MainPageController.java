@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.io.File;
 import java.util.ResourceBundle;
 import javafx.stage.FileChooser;
 import java.net.URL;
@@ -137,14 +139,22 @@ public class MainPageController implements Initializable {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Fichier texte", "*.txt")
         );
+        //On propose un nom de fichier par défaut
+        fileChooser.setInitialFileName(HelloApplication.bâtiment.getNom());
         // Afficher la fenêtre de dialogue
-        fileChooser.showSaveDialog(null);
-        // On récupère le nom du fichier lorsque le bouton "Enregistrer" est cliqué
-        String fileName = fileChooser.getInitialFileName();
-        // On récupère le chemin du fichier lorsque le bouton "Enregistrer" est cliqué
-        String filePath = fileChooser.getInitialDirectory().toString();
-        //on lance la méthode d'enregistrement
-        Enregistrement.enregistrerConfigurations(fileName, filePath);
+        File selectedFile = fileChooser.showSaveDialog(null);
+        if (selectedFile != null) {
+            // Create an instance of MyClass
+            Enregistrement save = new Enregistrement(HelloApplication.bâtiment);
+            // Call the enregistrerConfigurations method and pass in the filename and filepath
+            save.enregistrerConfigurations(selectedFile.getName(), selectedFile.getParent());
+            // Afficher un message de confirmation
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Enregistrer sous");
+            alert.setHeaderText(null);
+            alert.setContentText("Le fichier a été enregistré avec succès");
+            alert.showAndWait();
+        }
     }
 
 

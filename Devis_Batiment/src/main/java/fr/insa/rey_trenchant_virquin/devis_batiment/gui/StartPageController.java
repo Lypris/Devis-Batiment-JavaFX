@@ -48,6 +48,7 @@ public class StartPageController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    public static boolean project_open = false;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -197,7 +198,9 @@ public class StartPageController implements Initializable {
                         e.printStackTrace();
                     }
                     //ouvrir le projet
-                    System.out.println(FilePath.getText());
+                    project_open = true;
+                    importerSauvegarde(FilePath.getText());
+
 
                 }
             }
