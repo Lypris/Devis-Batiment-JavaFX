@@ -26,11 +26,7 @@ public class Enregistrement {
             b.newLine();
             b.write("<Infos>");
             b.newLine();
-            b.write("(" + HelloApplication.bâtiment.getType() + ") : (" + HelloApplication.bâtiment.getNom() + ")");
-            b.newLine();
-            b.write("Client: " + HelloApplication.bâtiment.getNomClient() + " " + HelloApplication.bâtiment.getPrenomClient());
-            b.newLine();
-            b.write(HelloApplication.bâtiment.getAdresse() + " " + HelloApplication.bâtiment.getVille() + " " + HelloApplication.bâtiment.getPostal());
+            b.write(HelloApplication.bâtiment.getType() + ";" + HelloApplication.bâtiment.getNom() + ";" + HelloApplication.bâtiment.getNomClient() + ";" + HelloApplication.bâtiment.getPrenomClient() + ";" + HelloApplication.bâtiment.getAdresse() + ";" + HelloApplication.bâtiment.getVille() + ";" + HelloApplication.bâtiment.getPostal());
             b.newLine();
             b.write("</Infos>");
             b.newLine();
@@ -62,33 +58,36 @@ public class Enregistrement {
                         id_ouverture;largeur_ouverture;longueur_ouverture""");
             b.newLine();
             b.write("<Murs>");
-            b.newLine();
             for (Mur m : HelloApplication.ListMur) {
+                b.newLine();
                 if (m.getR() != null) { //si le mur a un revêtement, on l'enregistre
                     String nomRevetement = m.getR().getNom();
                      b.write(m.getId() + ";" + m.getDebut().getId() + ";" + m.getFin().getId() + ";" + m.getNiv().getId() + ";" + nomRevetement);
                 } else {
                     b.write(m.getId() + ";" + m.getDebut().getId() + ";" + m.getFin().getId() + ";" + m.getNiv().getId());
                 }
-                b.newLine();
-                b.write("<Fenêtres>");
-                for (Fenetre fen : m.getListFenetre()){
+                if(!m.getListFenetre().isEmpty()){
+                    b.newLine();
+                    b.write("<Fenêtres>");
+                    for (Fenetre fen : m.getListFenetre()){
                         b.newLine();
                         b.write("    ");
                         b.write(fen.getId() + ";" + fen.getLargeur() + ";" + fen.getLongueur());
-                }
-                b.newLine();
-                b.write("</Fenêtres>");
-                b.newLine();
-                b.write("<Portes>");
-                for (Porte porte : m.getListPorte()){
+                    }
                     b.newLine();
-                    b.write("    ");
-                    b.write(porte.getId() + ";" + porte.getLargeur() + ";" + porte.getLongueur());
+                    b.write("</Fenêtres>");
                 }
-                b.newLine();
-                b.write("</Portes>");
-                b.newLine();
+                   if(!m.getListPorte().isEmpty()){
+                        b.newLine();
+                        b.write("<Portes>");
+                        for (Porte porte : m.getListPorte()){
+                            b.newLine();
+                            b.write("    ");
+                            b.write(porte.getId() + ";" + porte.getLargeur() + ";" + porte.getLongueur());
+                        }
+                        b.newLine();
+                        b.write("</Portes>");
+                    }
             }
             b.newLine();
             b.write("</Murs>");
@@ -97,11 +96,11 @@ public class Enregistrement {
             b.write("Format d'\u00e9criture pour une pièce: id_pièce;id_mur_1;id_mur_2;id_mur_3;id_mur_4;id_niveau");
             b.newLine();
             b.write("<Pièces>");
-            b.newLine();
             for (Piece p: HelloApplication.ListPiece) {
                 b.newLine();
                 b.write(p.getId() + ";" + p.getMur()[0].getId() + ";" + p.getMur()[1].getId() + ";" + p.getMur()[2].getId() + ";" + p.getMur()[3].getId() + ";" + p.getN().getId());
             }
+            b.newLine();
             b.write("</Pièces>");
             b.newLine();
             //enregistrement de tous les sols et plafonds de pièces
@@ -112,22 +111,32 @@ public class Enregistrement {
             //enregistrement de tous les sols si la liste n'est pas vide
             if (!HelloApplication.ListSol.isEmpty()) {
                 for (Sol s: HelloApplication.ListSol) {
-                    b.write(s.getId() + ";" + s.getN().getId() + ";" + s.getR().getNom());
+                    if(s.getR() != null){
+                        b.write(s.getId() + ";" + s.getN().getId() + ";" + s.getR().getNom());
+                    }
+                    else{
+                        b.write(s.getId() + ";" + s.getN().getId());
+                    }
                     b.newLine();
                 }
             }
-            b.write("<Sol>");
+            b.write("</Sol>");
             b.newLine();
             b.write("<Plafond>");
             b.newLine();
             //enregistrement de tous les plafonds si la liste n'est pas vide
             if (!HelloApplication.ListPlafond.isEmpty()) {
                 for (Plafond p: HelloApplication.ListPlafond) {
-                    b.write(p.getId() + ";" + p.getN().getId() + ";" + p.getR().getNom());
+                    if(p.getR() != null){
+                        b.write(p.getId() + ";" + p.getN().getId() + ";" + p.getR().getNom());
+                    }
+                    else{
+                        b.write(p.getId() + ";" + p.getN().getId());
+                    }
                     b.newLine();
                 }
             }
-            b.write("<Plafond>");
+            b.write("</Plafond>");
             b.newLine();
             b.write("Fin du fichier.");
             b.newLine();

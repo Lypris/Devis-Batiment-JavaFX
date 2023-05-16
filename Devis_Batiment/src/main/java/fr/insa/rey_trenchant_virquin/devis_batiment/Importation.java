@@ -31,15 +31,36 @@ public class Importation {
                 try {
                     switch (ligne) {
                         case "<Infos>" -> {
-                            //lecture des informations du bâtiment et du client
+                            //lecture et création des infos
+                            String type = null;
+                            String nom = null;
+                            String nomClient = null;
+                            String prenomClient = null;
+                            String adresse = null;
+                            String ville = null;
+                            String postal = null;
 
-                            String type = b.readLine().substring(1).split("\\) : \\(")[0];
-                            String nom = b.readLine().substring(1).split("\\) : \\(")[1].replace(")", "");
-                            String nomClient = b.readLine().substring("Client: ".length()).split(" ")[0];
-                            String prenomClient = b.readLine().substring("Client: ".length()).split(" ")[1];
-                            String adresse = b.readLine();
-                            String ville = b.readLine().split(" ")[1];
-                            String postal = b.readLine().split(" ")[2];
+                            while ((ligne = b.readLine()) != null && !ligne.equals("</Infos>")) {
+                                String[] valeurs = ligne.split(";");
+                                type = valeurs[0];
+                                nom = valeurs[1];
+                                //on gère les exceptions
+                                if (valeurs.length > 2) {
+                                    nomClient = valeurs[2];
+                                    if(valeurs.length > 3) {
+                                        prenomClient = valeurs[3];
+                                        if(valeurs.length > 4) {
+                                            adresse = valeurs[4];
+                                            if(valeurs.length > 5) {
+                                                ville = valeurs[5];
+                                                if(valeurs.length > 6) {
+                                                    postal = valeurs[6];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
                             //création du bâtiment en fonction de son type
                             if (type.equals("Maison")) {
@@ -84,7 +105,7 @@ public class Importation {
                                 int idCoinFin = Integer.parseInt(valeurs[2]);
                                 int idNiveau = Integer.parseInt(valeurs[3]);
                                 String revetement;
-                                if (valeurs[4] != "null") {
+                                if (valeurs.length > 4) {
                                     revetement = (valeurs[4]);
                                 } else {
                                     revetement = null;
@@ -127,7 +148,7 @@ public class Importation {
                         }
                         case "<Pièces>" -> {
                             while ((ligne = b.readLine()) != null && !ligne.equals("</Pièces>")) {
-                                String[] valeurs = ligne.split(" ");
+                                String[] valeurs = ligne.split(";");
                                 int id = Integer.parseInt(valeurs[0]);
                                 int idMur1 = Integer.parseInt(valeurs[1]);
                                 int idMur2 = Integer.parseInt(valeurs[2]);
