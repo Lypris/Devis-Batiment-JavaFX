@@ -10,6 +10,8 @@ Pour sauvegarder les modifications sur le GitHub : Team/commit puis Team/Remote/
 
 ## Problèmes
 
+- Problème sur la gestion de possible pièce: impossible d'en créer deux côte à côte avec un mur commun
+- Problème lors de la création d'un niveau : il faudrait que le niveau soit créé uniquement si l'utilisateur clique sur le bouton OK
 - Problème lors de l'annulation de la création d'un niveau/ changement de hauteur d'un niveau existant : il faudrait revenir à l'état précédent du niveau (avant la création/ modification)
 - Implémentation/ Changements pour le système de création de bâtiment avec le choix parmi immeuble et maison
 - Classe Devis à continuer (comprendre comment écrire dans un fichier xls)
