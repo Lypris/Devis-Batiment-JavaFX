@@ -1,26 +1,18 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
-import fr.insa.rey_trenchant_virquin.devis_batiment.Coin;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Enregistrement;
-import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
-import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import java.io.File;
 import java.util.ResourceBundle;
 import javafx.stage.FileChooser;
 import java.net.URL;
-import javafx.stage.Screen;
 
 public class MainPageController implements Initializable {
     @FXML
@@ -145,7 +137,7 @@ public class MainPageController implements Initializable {
         File selectedFile = fileChooser.showSaveDialog(null);
         if (selectedFile != null) {
             // Create an instance of MyClass
-            Enregistrement save = new Enregistrement(HelloApplication.bâtiment);
+            Enregistrement save = new Enregistrement();
             // Call the enregistrerConfigurations method and pass in the filename and filepath
             save.enregistrerConfigurations(selectedFile.getName(), selectedFile.getParent());
             // Afficher un message de confirmation

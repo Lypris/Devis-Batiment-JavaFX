@@ -262,7 +262,7 @@ public class StartPageController implements Initializable {
         stage.show();
     }
     public static void importerSauvegarde(String nom){
-        Importation importation = new Importation(Batiment.ListNiveau, Batiment.ListCoin, Batiment.ListMur, Batiment.ListPiece);
+        Importation importation = new Importation();
         // Appel de la méthode d'importation des configurations
         importation.importerConfigurations(nom);
     }

@@ -1,7 +1,6 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
 
-import fr.insa.rey_trenchant_virquin.devis_batiment.Gestion;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Niveau;
 import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
 import javafx.fxml.FXML;
@@ -25,7 +24,7 @@ public class TabNavigation {
         //si on ouvre un fichier
         if(StartPageController.project_open == true){
             //on récupère la liste des niveaux
-            List<Niveau> listNiveau = Gestion.ListNiveau;
+            List<Niveau> listNiveau = HelloApplication.ListNiveau;
             //on parcourt la liste des niveaux
             for (Niveau niveau : listNiveau) {
                 //on crée un nouveau tab
@@ -51,8 +50,8 @@ public class TabNavigation {
         else {
             // Ajoute un onglet par défaut avec un niveau correspondant
             Niveau defaultNiveau = new Niveau(1, 2.5);
-            Gestion.ListNiveau.add(defaultNiveau);
-            System.out.println(Gestion.ListNiveau);
+            HelloApplication.ListNiveau.add(defaultNiveau);
+            System.out.println(HelloApplication.ListNiveau);
             Tab defaultTab = new Tab("Niveau 1");
             DessinCanvas defaultCanvas = new DessinCanvas(0, 0);
             defaultCanvas.setWidth(tabPane.getWidth());
@@ -84,7 +83,7 @@ public class TabNavigation {
             int tabIndex = tabPane.getTabs().size() - 1;
             // on crée le nouveau niveau avec la hauteur saisie par l'utilisateur
             Niveau newNiveau = Niveau.creerNiveau(tabIndex + 1);
-            System.out.println(Gestion.ListNiveau);
+            System.out.println(HelloApplication.ListNiveau);
             // on crée le nouveau tab avec un DessinCanvas
             Tab newTab = new Tab("Niveau " + newNiveau.getId());
             DessinCanvas canvas = new DessinCanvas(tabPane.getWidth(), tabPane.getHeight());
@@ -104,7 +103,7 @@ public class TabNavigation {
                     // Supprime le niveau correspondant
                     for (Tab tab : change.getRemoved()) {
                         Niveau niveau = (Niveau) tab.getUserData();
-                        Gestion.ListNiveau.remove(niveau);
+                        HelloApplication.ListNiveau.remove(niveau);
                     }
                     // Met à jour les identifiants des niveaux
                     int i = 1;
@@ -148,8 +147,8 @@ public class TabNavigation {
                 }
             }
             // On met à jour le niveau actuel
-            Gestion.niv_actu = tabPane.getSelectionModel().getSelectedIndex() + 1;
-            System.out.println("Niveau actuel: " + Gestion.niv_actu);
+            HelloApplication.niv_actu = tabPane.getSelectionModel().getSelectedIndex() + 1;
+            System.out.println("Niveau actuel: " + HelloApplication.niv_actu);
         });
 
         //Ajouter un écouteur sur le redimensionnement du tabpane: redimensionne les canvas des onglets
