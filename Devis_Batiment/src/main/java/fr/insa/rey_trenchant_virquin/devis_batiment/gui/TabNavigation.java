@@ -32,7 +32,7 @@ public class TabNavigation {
                 Tab newTab = new Tab("Niveau " + listNiveau.indexOf(niveau) + 1);
                 //on crée un nouveau canvas
                 DessinCanvas newCanvas = new DessinCanvas(0, 0);
-                //on définit la taille du canvas
+                //on lie la taille du canvas avec celle de l'onglet
                 newCanvas.setWidth(tabPane.getWidth());
                 newCanvas.setHeight(tabPane.getHeight());
                 //on crée un nouveau pane
@@ -154,44 +154,52 @@ public class TabNavigation {
         });
 
         //Ajouter un écouteur sur le redimensionnement du tabpane: redimensionne les canvas des onglets
-        tabPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals(oldValue)) { // Check if the new value is different from the old value
-                for (Tab tab : tabPane.getTabs()) {
-                    if (tab.getContent() instanceof Pane) {
-                        Pane pane = (Pane) tab.getContent();
-                        if (!pane.getChildren().isEmpty()) { // Check if the list is not empty
+        /*
+        Avec cette modification, vous ajoutez un écouteur sur la propriété contentProperty() de chaque onglet.
+        Lorsque le contenu de l'onglet change, vous ajoutez également un écouteur sur la propriété widthProperty()
+        du Pane correspondant. Lorsque la largeur du Pane change, vous mettez à jour la largeur du Canvas contenu
+        et appelez la méthode redrawAll() avec les données du niveau approprié.
+
+        Cela évite de parcourir tous les onglets à chaque redimensionnement du TabPane et vous vous concentrez
+        uniquement sur les changements de contenu et de largeur pertinents.
+         */
+        tabPane.getTabs().forEach(tab -> {
+            tab.contentProperty().addListener((observable, oldContent, newContent) -> {
+                if (newContent instanceof Pane) {
+                    Pane pane = (Pane) newContent;
+                    pane.widthProperty().addListener((paneObservable, oldWidth, newWidth) -> {
+                        if (!newWidth.equals(oldWidth) && !pane.getChildren().isEmpty()) {
                             Node node = pane.getChildren().get(0);
                             if (node instanceof DessinCanvas) {
-                                ((DessinCanvas) node).setWidth(newValue.doubleValue());
-                                //TODO: récupérer les données du niveau et les passer en paramètre de redrawAll
+                                ((DessinCanvas) node).setWidth(newWidth.doubleValue());
+                                // TODO: récupérer les données du niveau et les passer en paramètre de redrawAll
                                 int id = ((Niveau) tab.getUserData()).getId();
                                 ((DessinCanvas) node).redrawAll(Objfromid.NiveauFromId(id));
                             }
                         }
-                        System.out.println("Width: " + newValue.doubleValue()); //TODO: supprimer
-                    }
+                    });
                 }
-            }
+            });
         });
 
-        tabPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.equals(oldValue)) { // Check if the new value is different from the old value
-                for (Tab tab : tabPane.getTabs()) {
-                    if (tab.getContent() instanceof Pane) {
-                        Pane pane = (Pane) tab.getContent();
-                        if (!pane.getChildren().isEmpty()) { // Check if the list is not empty
+
+        tabPane.getTabs().forEach(tab -> {
+            tab.contentProperty().addListener((observable, oldContent, newContent) -> {
+                if (newContent instanceof Pane) {
+                    Pane pane = (Pane) newContent;
+                    pane.heightProperty().addListener((paneObservable, oldHeight, newHeight) -> {
+                        if (!newHeight.equals(oldHeight) && !pane.getChildren().isEmpty()) {
                             Node node = pane.getChildren().get(0);
                             if (node instanceof DessinCanvas) {
-                                ((DessinCanvas) node).setHeight(newValue.doubleValue());
-                                //TODO: récupérer les données du niveau et les passer en paramètre de redrawAll
+                                ((DessinCanvas) node).setHeight(newHeight.doubleValue());
+                                // TODO: récupérer les données du niveau et les passer en paramètre de redrawAll
                                 int id = ((Niveau) tab.getUserData()).getId();
                                 ((DessinCanvas) node).redrawAll(Objfromid.NiveauFromId(id));
                             }
                         }
-                        System.out.println("Height: " + newValue.doubleValue()); //TODO: supprimer
-                    }
+                    });
                 }
-            }
+            });
         });
         // Add a listener to the tab pane to handle double-click events
         tabPane.setOnMouseClicked(event -> {
@@ -208,7 +216,7 @@ public class TabNavigation {
         });
     }
 
-    // Method to change the height of the level
+    // Méthode pour changer la hauteur d'un niveau
     private void changeLevelHeight() {
         try {
             // on ouvre la fenêtre pour saisir la hauteur du nouveau niveau

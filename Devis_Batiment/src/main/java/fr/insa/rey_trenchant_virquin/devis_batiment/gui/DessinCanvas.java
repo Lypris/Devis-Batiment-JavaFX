@@ -4,6 +4,7 @@ import fr.insa.rey_trenchant_virquin.devis_batiment.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
@@ -26,8 +27,8 @@ public class DessinCanvas extends Canvas {
     private final double MAX_ZOOM_LEVEL = 5.0;
     private final double MIN_ZOOM_LEVEL = 0.5;
     // Add a list to keep track of selected corners
-    private List<Coin> selectedCorners = new ArrayList<>();
-    private List<Mur> selectedMurs = new ArrayList<>();
+    public static List<Coin> selectedCorners = new ArrayList<>();
+    public static List<Mur> selectedMurs = new ArrayList<>();
 
     public DessinCanvas(double width, double height) {
         super(width, height);
@@ -195,6 +196,7 @@ public class DessinCanvas extends Canvas {
         return null;
     }
 
+
     // Method that draws the selected corners in red
     private void drawSelectedCoins() {
         for (Coin corner : selectedCorners) {
@@ -246,11 +248,12 @@ public class DessinCanvas extends Canvas {
     public void drawGrid() {
         double gridSize = 100 * zoomLevel;
         double subGridSize = gridSize / 10;
-        double left = -translate.getX() / zoomLevel - getWidth() / 2 / zoomLevel;
-        double top = -translate.getY() / zoomLevel - getHeight() / 2 / zoomLevel;
+        double left = -translate.getX() / zoomLevel;
+        double top = -translate.getY() / zoomLevel;
         double right = left + getWidth() / zoomLevel;
         double bottom = top + getHeight() / zoomLevel;
         this.getGraphicsContext2D().clearRect(0, 0, this.getWidth(), this.getHeight());
+
         // Draw large tiles with black outlines
         this.getGraphicsContext2D().setStroke(Color.BLACK);
         this.getGraphicsContext2D().setLineWidth(1);
@@ -259,6 +262,7 @@ public class DessinCanvas extends Canvas {
                 this.getGraphicsContext2D().strokeRect(i * zoomLevel + translate.getX(), j * zoomLevel + translate.getY(), gridSize * zoomLevel, gridSize * zoomLevel);
             }
         }
+
         // Draw sub-tiles with grey lines
         this.getGraphicsContext2D().setStroke(Color.rgb(128, 128, 128, 0.5));
         this.getGraphicsContext2D().setLineWidth(0.5);
@@ -268,7 +272,6 @@ public class DessinCanvas extends Canvas {
             }
         }
     }
-
     //méthode pour tout redessiner sur un niveau
     public void redrawAll(Niveau niv) {
         drawGrid();
@@ -288,4 +291,45 @@ public class DessinCanvas extends Canvas {
             }
         }
     }
+    //Méthode permettant de créer un mur depuis un seul coin en le sélectionnant et en glissant la souris jusqu'à l'endroit où l'on veut placer le deuxième coin
+    /*
+    public void dessineMurEnCours(MouseEvent event) {
+        if (selectedCorners.size() == 1) {
+            double x1 = selectedCorners.get(0).getX() * zoomLevel + translate.getX();
+            double y1 = selectedCorners.get(0).getY() * zoomLevel + translate.getY();
+            //on récupère les coordonnées de la souris tant qu'on ne relâche pas le clic
+            double x2 = event.getX();
+            double y2 = event.getY();
+            //on dessine le mur en cours en affichant la longueur du mur en temps réel
+            this.getGraphicsContext2D().setStroke(Color.BLUE);
+            this.getGraphicsContext2D().setLineWidth(2.0);
+            this.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
+            this.getGraphicsContext2D().setFill(Color.BLACK);
+            this.getGraphicsContext2D().fillText("Longueur : " + Math.round(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) / zoomLevel * 100) / 100.0, x2, y2);
+            //on regarde si le canvas est cliqué quelque part et si oui on crée le coin correspondant et on créer le mur
+            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                double gridSize = 100 * zoomLevel;
+                double subGridSize = gridSize / 10;
+                double x = (event.getX() - translate.getX()) / zoomLevel;
+                double y = (event.getY() - translate.getY()) / zoomLevel;
+                double snappedX = Math.round(x / subGridSize) * subGridSize;
+                double snappedY = Math.round(y / subGridSize) * subGridSize;
+                Coin coin = Coin.creerCoin(snappedX, snappedY);
+                if (coin != null) {
+                    dessineCoin(coin);
+                    Mur mur = Mur.creerMur(selectedCorners.get(0), coin);
+                    if (mur != null) {
+                        dessineMur(mur);
+                    } else {
+                        System.out.println("Erreur : mur non créé");
+                    }
+                } else {
+                    System.out.println("Erreur : coin non créé");
+                }
+                selectedCorners.clear();
+                selectedMurs.clear();
+            }
+        }
+    }
+     */
 }

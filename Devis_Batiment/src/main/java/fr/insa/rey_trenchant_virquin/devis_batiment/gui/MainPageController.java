@@ -1,6 +1,7 @@
 package fr.insa.rey_trenchant_virquin.devis_batiment.gui;
 
 import fr.insa.rey_trenchant_virquin.devis_batiment.Enregistrement;
+import fr.insa.rey_trenchant_virquin.devis_batiment.Objfromid;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
@@ -115,6 +116,11 @@ public class MainPageController implements Initializable {
             create_coin = false;
             create_mur = false;
             create_piece = false;
+            //on vide la liste des objets sélectionnés
+            DessinCanvas.selectedCorners.clear();
+            DessinCanvas.selectedMurs.clear();
+            DessinCanvas.redrawAll(Objfromid.NiveauFromId(HelloApplication.niv_actu));
+
         });
 
     }
