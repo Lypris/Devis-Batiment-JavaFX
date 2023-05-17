@@ -119,18 +119,19 @@ public class Verification {
         Coin[] coin_id = SetIdCoin.toArray(new Coin[4]); //conversion du set en tableau
         //vérification que les coins des murs sont exactement 4 
         if(SetIdCoin.size()!=4){
-            System.out.println("Les murs sélectionnés ont plus que 4 coins en commun.");
+            System.out.println("Les murs sélectionnés ont plus ou moins que 4 coins en commun.");
             return false;
         }
         //vérification que les murs ne constituent pas déjà une pièce
         for (Piece p : HelloApplication.ListPiece){
             int compt=0;
             for(i=0; i<4; i++){
-                if (p.getMur()[i]==Mur[i]){
+                if (p.getMur()[0]==Mur[i] || p.getMur()[1]==Mur[i]){
                     compt++;
                 }
+
             }
-            if (compt==4){
+            if (compt>1){
                 System.out.println("Les murs sélectionnés constituent déjà une pièce.");
                 return false;
             }
@@ -140,9 +141,9 @@ public class Verification {
             //on prend les 4 coins de la pièce p
             Coin[] coin_p = p.getCoin();
             //on regarde si l'abscisse de la pièce en création est comprise entre les abscisses des coins de la pièce p
-            if (coin_id[0].getX()>=coin_p[0].getX() && coin_id[0].getX()<=coin_p[1].getX() || coin_id[0].getX()<=coin_p[0].getX() && coin_id[0].getX()>=coin_p[1].getX()){
+            if (coin_id[0].getX()>coin_p[0].getX() && coin_id[0].getX()<coin_p[1].getX() || coin_id[0].getX()<coin_p[0].getX() && coin_id[0].getX()>coin_p[1].getX()){
                 //on regarde si l'ordonnée de la pièce en création est comprise entre les ordonnées des coins de la pièce p
-                if (coin_id[0].getY()>=coin_p[0].getY() && coin_id[0].getY()<=coin_p[2].getY() || coin_id[0].getY()<=coin_p[0].getY() && coin_id[0].getY()>=coin_p[2].getY()){
+                if (coin_id[0].getY()>coin_p[0].getY() && coin_id[0].getY()<coin_p[2].getY() || coin_id[0].getY()<coin_p[0].getY() && coin_id[0].getY()>coin_p[2].getY()){
                     System.out.println("La pièce est à l'intérieur d'une autre pièce.");
                     return false;
                 }

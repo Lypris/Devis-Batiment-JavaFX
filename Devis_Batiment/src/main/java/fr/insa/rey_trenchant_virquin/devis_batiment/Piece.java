@@ -76,7 +76,7 @@ public class Piece {
     public static Piece creerPieceDepuisMur(int I, int II, int III, int IV) {
 
         System.out.println(HelloApplication.ListMur);
-        if(Verification.possiblePiece(I ,II, III, IV)){
+        if(Verification.possiblePiece(I, II, III, IV) != false){
             Mur [] mur = {Objfromid.MurFromId(I), Objfromid.MurFromId(II), Objfromid.MurFromId(III), Objfromid.MurFromId(IV)};
             //création d'un Set contenant les coins des murs
             Set<Coin> SetCoin = new HashSet<>();
