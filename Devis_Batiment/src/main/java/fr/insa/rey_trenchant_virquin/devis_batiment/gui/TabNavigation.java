@@ -57,8 +57,10 @@ public class TabNavigation {
             System.out.println(HelloApplication.ListNiveau);
             Tab defaultTab = new Tab("Niveau 1");
             DessinCanvas defaultCanvas = new DessinCanvas(0, 0);
-            defaultCanvas.setWidth(tabPane.getWidth());
-            defaultCanvas.setHeight(tabPane.getHeight());
+            Platform.runLater(() -> {
+                defaultCanvas.setWidth(tabPane.getWidth());
+                defaultCanvas.setHeight(tabPane.getHeight());
+            });
             Pane defaultPane = new Pane(defaultCanvas);
             defaultTab.setContent(defaultPane);
             defaultTab.setUserData(defaultNiveau);

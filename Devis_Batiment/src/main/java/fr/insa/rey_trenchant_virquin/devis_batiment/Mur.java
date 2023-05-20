@@ -8,6 +8,8 @@ import fr.insa.rey_trenchant_virquin.devis_batiment.gui.HelloApplication;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Translate;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -161,10 +163,29 @@ public class Mur {
         double y1 = debut.getY() * zoomLevel + translate.getY();
         double x2 = fin.getX() * zoomLevel + translate.getX();
         double y2 = fin.getY() * zoomLevel + translate.getY();
-        double lineWidth = 2.0;
-        gc.setStroke(Color.rgb(232, 155, 38));
+        double lineWidth = 3.0;
+
+        gc.setStroke(Color.rgb(8, 31, 45));
         gc.setLineWidth(lineWidth);
         gc.strokeLine(x1, y1, x2, y2);
+    }
+    public static Mur[] creer4Murs(Coin c1, Coin c2) {
+        double x1 = c1.getX();
+        double y1 = c1.getY();
+        double x2 = c2.getX();
+        double y2 = c2.getY();
+        double minX = Math.min(x1, x2);
+        double minY = Math.min(y1, y2);
+        double maxX = Math.max(x1, x2);
+        double maxY = Math.max(y1, y2);
+        Coin c3 = Coin.creerCoin(minX, maxY);
+        Coin c4 = Coin.creerCoin(maxX, minY);
+        Mur m1 = Mur.creerMur(c1, c3);
+        Mur m2 = Mur.creerMur(c3, c2);
+        Mur m3 = Mur.creerMur(c2, c4);
+        Mur m4 = Mur.creerMur(c4, c1);
+        Mur[] murs = {m1, m2, m3, m4};
+        return murs;
     }
 
 }

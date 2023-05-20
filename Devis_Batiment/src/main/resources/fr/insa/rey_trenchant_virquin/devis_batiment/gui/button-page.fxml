@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.insa.rey_trenchant_virquin.devis_batiment.gui.ButtonPage">
+    <children>
+        <HBox fx:id="HBoxButtons" alignment="CENTER_LEFT" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label fx:id="l1" text="Création" />
+                <Button fx:id="CoinButton" onAction="#handleCoinButtonAction" mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Coin: permet de créer des coins sur le niveau sélectionné." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/coin.png" />
+                            </image></ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="MurButton" mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Mur: permet de créer des murs entre des coins existants sur le niveau sélectionné." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/ligne.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="PieceButton" mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Pièce: permet de définir un pièce." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/piece.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="PorteButton" mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Porte: permet d'ajouter une porte dans un mur." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/porte.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="FenetreButton" mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Fenêtre: permet de d'ajouter une fenêtre dans un mur." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/fenetre.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="TremieButton" mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Trémie: permet d'ajouter une trémie dans un sol ou un plafond." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/escalier.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Toit: permet d'ajouter une toiture au bâtiment." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/toiture.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false">
+                    <tooltip>
+                        <Tooltip text="Catalogue de revêtements: permet de rechercher un revêtement souhaité parmi un catalogue défini et de l'ajouter à une surface choisie sur le niveau actuel." />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/revetement.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Separator fx:id="SeparatorControls" orientation="VERTICAL" />
+                <Label fx:id="l2" text="Contrôles" />
+                <Button fx:id="CursorButton" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/curseur.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Curseur de souris" />
+                    </tooltip></Button>
+                <Button mnemonicParsing="false" text="Supprimer" />
+                <ToggleButton fx:id="TransparenceButton" mnemonicParsing="false" text="Transparence">
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/aveugle.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </ToggleButton>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

@@ -11,6 +11,8 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
@@ -41,6 +43,7 @@ public class DessinCanvas extends Canvas {
         getTransforms().addAll(scale, translate);
 
         // Add the mouse wheel event listener for zooming
+        /*
         addEventHandler(ScrollEvent.SCROLL, event -> {
             double oldZoomLevel = zoomLevel;
             if (event.getDeltaY() > 0) {
@@ -69,29 +72,18 @@ public class DessinCanvas extends Canvas {
             redrawAll(Objfromid.NiveauFromId(HelloApplication.niv_actu));
             event.consume();
         });
-
+         */
         // Add the mouse click event listener for drawing corners
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (MainPageController.create_coin) {
+            if (ButtonPage.create_coin) {
                 dessineCoinSmart(event);
             }
         });
 
         // Ajout d'un écouteur pour prendre en charge la sélection et la désélection des coins
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (MainPageController.create_mur) {
-                // Get the clicked corner
-                //à supprimer
-                //affichage de contrôle dans la console: on affiche tous les coins de ce niveau
-                System.out.println("Coins du niveau " + HelloApplication.niv_actu + " :");
-                for (Coin c : HelloApplication.ListCoin){
-                    if (c.getNiv()==NiveauFromId(HelloApplication.niv_actu)) {
-                        System.out.println(c);
-                    }
-                }
-
+            if (ButtonPage.create_mur) {
                 Coin clickedCorner = getClickedCorner(event);
-
                 if (clickedCorner != null) {
                     if (selectedCorners.contains(clickedCorner)) {
                         // Deselect the corner if it's already selected
@@ -103,12 +95,31 @@ public class DessinCanvas extends Canvas {
 
                         // Check if two corners are selected
                         if (selectedCorners.size() == 2) {
-                            // Create a wall with the selected corners
-                            Mur m = Mur.creerMur(selectedCorners.get(0), selectedCorners.get(1));
-                            if (m!= null){
-                                dessineMur(m);
+                            boolean possibleMur = Verification.possibleMur(selectedCorners.get(0), selectedCorners.get(1));
+                            if (possibleMur) {
+                                // Create a wall with the selected corners
+                                Mur m = Mur.creerMur(selectedCorners.get(0), selectedCorners.get(1));
+                                if (m != null) {
+                                    dessineMur(m);
+                                } else {
+                                    System.out.println("Erreur : mur non créé");
+                                }
                             } else {
-                                System.out.println("Erreur : mur non créé");
+                                Mur[] murs = Mur.creer4Murs(selectedCorners.get(0), selectedCorners.get(1));
+                                if (murs != null) {
+                                    for (Mur mur : murs) {
+                                        dessineMur(mur);
+                                    }
+                                    // On créer la pièce avec les murs sélectionnés
+                                    Piece p = Piece.creerPieceDepuisMur(murs[0].getId(), murs[1].getId(), murs[2].getId(), murs[3].getId());
+                                    if (p != null) {
+                                        dessinePiece(p);
+                                    } else {
+                                        System.out.println("Erreur : pièce non créée");
+                                    }
+                                } else {
+                                    System.out.println("Erreur : mur non créé");
+                                }
                             }
                             selectedCorners.clear();
                             redrawAll(Objfromid.NiveauFromId(HelloApplication.niv_actu));
@@ -117,9 +128,10 @@ public class DessinCanvas extends Canvas {
                 }
             }
         });
+
         //Ajout d'un écouteur pour prendre en charge la sélection et la désélection des murs
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (MainPageController.create_piece) {
+            if (ButtonPage.create_piece) {
                 // Get the clicked wall
                 Mur clickedWall = getSelectedWall(event);
 
@@ -136,7 +148,7 @@ public class DessinCanvas extends Canvas {
                         if (selectedMurs.size() == 4) {
                             // On créer la pièce avec les murs sélectionnés
                             Piece p = Piece.creerPieceDepuisMur(selectedMurs.get(0).getId(), selectedMurs.get(1).getId(), selectedMurs.get(2).getId(), selectedMurs.get(3).getId());
-                            if (p!= null){
+                            if (p != null) {
                                 dessinePiece(p);
                             } else {
                                 System.out.println("Erreur : pièce non créée");
@@ -331,5 +343,53 @@ public class DessinCanvas extends Canvas {
             }
         }
     }
+     */
+    /*
+    public void dessineBarres(GraphicsContext gc, double zoomLevel, Translate translate) {
+        double x1 = debut.getX() * zoomLevel + translate.getX();
+        double y1 = debut.getY() * zoomLevel + translate.getY();
+        double x2 = fin.getX() * zoomLevel + translate.getX();
+        double y2 = fin.getY() * zoomLevel + translate.getY();
+        double barOffset = 12.0;
+        double barHeight = 2.0;
+
+        // Calcul de la longueur du mur
+        double length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        String lengthString = String.format("%.2f", length);
+
+        // Dessin de la barre décalée avec les crochets
+        double deltaX = (y2 - y1) * barOffset / length;
+        double deltaY = (x2 - x1) * barOffset / length;
+
+        double barStartX = x1 + deltaX;
+        double barStartY = y1 - deltaY;
+        double barEndX = x2 + deltaX;
+        double barEndY = y2 - deltaY;
+
+        gc.setLineWidth(barHeight);
+        gc.strokeLine(barStartX, barStartY, barEndX, barEndY);
+        gc.strokeLine(barStartX, barStartY - barHeight / 2, barStartX, barStartY + barHeight / 2);
+        gc.strokeLine(barEndX, barEndY - barHeight / 2, barEndX, barEndY + barHeight / 2);
+
+        // Affichage de la longueur au-dessus de la barre
+        double textX;
+        double textY;
+
+        if (x1 == x2) {
+            // Segment vertical
+            textX = barStartX;
+            textY = (barStartY + barEndY) / 2 - barOffset / 2;
+        } else {
+            // Autres orientations de segment
+            textX = (barStartX + barEndX) / 2;
+            textY = barStartY - barOffset / 2;
+        }
+
+        gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setFont(Font.font("Arial", 12));
+        gc.fillText(lengthString, textX, textY);
+    }
+
      */
 }
